@@ -1,49 +1,55 @@
-# Foundational Video World Model (2024.12.31)
+# Foundational Video World Model
+
+Date: 2024.12.31 | Author: Zihan Ding
+
+
 
 A foundational video world model is crucial for advancements in robotics (e.g., [video language planning](https://video-language-planning.github.io/), [diffusion forcing](https://boyuan.space/diffusion-forcing/)) and the next generation of game engines (e.g., [GameNGen](https://gamengen.github.io/), [GameGen-x](https://gamegen-x.github.io/), [Oasis](https://www.decart.ai/articles/oasis-interactive-ai-video-game-model), [Genie 2](https://deepmind.google/discover/blog/genie-2-a-large-scale-foundation-world-model/)), autonomous driving, etc. In robotics, such a model could enable access to an infinite amount of interaction data within realistic environments, moving beyond the limitations of non-realistic simulators. This breakthrough has the potential to bypass the long-standing simulation-to-reality gap that has impeded the research community for over a decade.
 
-<img src="https://quantumiracle.github.io/webpage/blogs/files/vlp.gif" alt="vlp" style="zoom:400%;" />
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/vlp.gif" alt="vlp" style="zoom:400%;" /><figcaption>Video source: video-language-planning project page.</figcaption></figure>
 
-​					<figcaption>Video source: video-language-planning project page.</figcaption>
 
-![oasis](https://quantumiracle.github.io/webpage/blogs/files/oasis.gif)
 
-​									<figcaption>Video source: open-oasis model.</figcaption>
 
-![gamegenx](https://quantumiracle.github.io/webpage/blogs/files/gamegenx.gif)
 
-​					        <figcaption>Video source: GameGen-x project page.</figcaption>
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/oasis.gif" alt="vlp" style="zoom:100%;" /><figcaption>Video source: open-oasis model.</figcaption></figure>
+
+
+
+
+
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/gamegenx.gif" alt="vlp" style="zoom:100%;" /><figcaption>Video source: GameGen-x project page.</figcaption></figure>
 
 [OpenAI's blog on Sora](https://openai.com/index/video-generation-models-as-world-simulators/) project claims video model as the world simulators. While this concept is undoubtedly inspiring and promising, it is important to approach such claims with skepticism. This blog critically examines the desiderata for constructing foundational video models that are both practical and feasible for robotics and the game industry. Drawing from the current state of video generation techniques, the limitations of existing models are highlighted. To guide the research community towards meaningful progress, I have identified examples for each issue as evidence, accompanied by further analysis to illuminate potential research directions.
 
 ## Desiderata
 To establish a foundational video world model, the following desiderata must be addressed:
 
-### Fidelity and Realism
+### * Fidelity and Realism
 
 The model must accurately reflect physical laws for robotics or simulated rules in game engines. This fidelity ensures real-world applicability and effective simulation.
 
-### Efficient Video Generation
+### * Efficient Video Generation
 
 The model should support efficient video generation with minimal computational cost and latency. Techniques such as few-step sampling, distillation, and hardware acceleration are essential to achieve faster and more resource-efficient results.
 
-### Long Video Generation with Frame Conditioning
+### * Long Video Generation with Frame Conditioning
 
 Long video sequences should be generated conditionally, leveraging previous or current frames as context. Autoregressive techniques are crucial to maintaining coherence over extended timelines.
 
-### Historical Information Retrieval
+### * Historical Information Retrieval
 
 The ability to utilize historical frames or retrieval-augmented generation (RAG) is critical for context-aware generation. Alternative memory mechanisms can help maintain computational efficiency while effectively integrating past information.
 
-### Action Conditioning
+### * Action Conditioning
 
 The model should support agent interaction by processing action inputs and predicting future outcomes in video format. This capability is fundamental for applications in robotics and gaming.
 
-### Unified Latent Action Representation
+### * Unified Latent Action Representation
 
 The model must accommodate diverse environments and agents. For games, this involves mapping hardware inputs for standard user controls; for robotics, both high-level abstract actions and precise low-level robot control commands should be seamlessly integrated.
 
-### Controllability
+### * Controllability
 
 A highly controllable model is essential for practical applications. Controllability allows for:
 
@@ -52,7 +58,7 @@ A highly controllable model is essential for practical applications. Controllabi
 
 Techniques such as [classifier-free guidance](https://arxiv.org/abs/2207.12598) and [ControlNet](https://arxiv.org/abs/2302.05543) enhancements offer promising ways to improve model controllability.
 
-### 3D Information
+### * 3D Information
 
 While incorporating 3D information can enhance realism, it may not always be necessary. Robust 3D reconstruction from 2D videos or binocular vision can serve as an efficient alternative. The depth information is provided in some cameras. If 3D information can be reconstructed with 2D videos or binocular vision, we may not necessarily require the depth information for foundational video world models.
 
@@ -70,9 +76,7 @@ Another method to address partial observability is by concatenating more histori
 
 ### Recency Bias
 
-<img src="https://quantumiracle.github.io/webpage/blogs/files/mc_example.gif" alt="mc_example" style="zoom:150%;" />
-
-​								 <figcaption>Video generated with open-oasis model.</figcaption>
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/mc_example.gif" alt="vlp" style="zoom:200%;" /><figcaption>Video generated with open-oasis model.</figcaption></figure>
 
 Recency bias in video generation models is closely linked to the lack of long-term memory mechanisms in their design. A relevant example as above can be observed in the [Open-Oasis](https://github.com/etched-ai/open-oasis) project, where the model employs a [Diffusion Transformer](https://arxiv.org/abs/2212.09748) with the [Diffusion Forcing](https://arxiv.org/abs/2407.01392) technique to enable autoregressive rollouts. In this approach, the video diffusion model is conditioned on sequential action inputs.
 
@@ -82,9 +86,7 @@ The [Loopy](https://arxiv.org/abs/2409.02634) project proposes addressing this i
 
 ### Compounding Error
 
-![diffusionforcing](https://quantumiracle.github.io/webpage/blogs/files/diffusionforcing.gif)
-
-​                             <figcaption>Video source: [Diffusion Forcing]((https://arxiv.org/abs/2407.01392)) project page.</figcaption>
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/diffusionforcing.gif" alt="vlp" style="zoom:100%;" /><figcaption>Video source:         <a href="https://arxiv.org/abs/2407.01392" target="_blank" rel="noopener noreferrer">Diffusion Forcing</a> project page.</figcaption></figure>
 
 To generate sequences of arbitrary or extra-long length, video models need to be sampled in an autoregressive manner. However, autoregressive sampling in continuous space often accumulates small errors at each step, leading to samples that deviate significantly from the original distribution—a phenomenon known as *compounding error*. In robotics planning, compounding error is a well-known issue when dynamics models with approximation errors are applied autoregressively. Since the essence of video models is to predict future states in visual format based on current states, they inherently fall under the category of dynamics models and are thus susceptible to compounding error.
 
@@ -92,9 +94,7 @@ Unlike text generation with discrete tokens in large language models, video gene
 
 ### Physical Reality
 
-![non_physical](https://quantumiracle.github.io/webpage/blogs/files/non_physical.gif)
-
-​                                <figcaption>Video source: OpenAI Sora model.</figcaption>
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/non_physical.gif" alt="vlp" style="zoom:100%;" /><figcaption>Video source: OpenAI Sora model.</figcaption></figure>
 
 Since the initial public announcement of the Sora project, it has been widely acknowledged that current video generation methods using diffusion models cannot fully guarantee physical reality, as shown in above video example. To date, no principled solution has been established to address this limitation. In game simulation, this issue is less critical compared to robotics video modeling, where adherence to the laws governing our physical world is highly influential for robot planning performances. While game simulations primarily demand visual realism (not even physical reality), existing techniques still fall short of ensuring that no artificial or unnatural processes occur during the simulation.
 
@@ -108,17 +108,13 @@ On the other hand, compared to linguistic grammar, physical laws are significant
 
 As a result, video models tend to perform well on in-distribution cases but struggle with out-of-distribution scenarios governed by the same physical laws. This discrepancy highlights their inability to fully internalize and generalize physical principles. An example is provided below, showing a misalignment in motion between ground-truth videos (top) and generated videos (bottom) in out-of-distribution cases.
 
-<img src="https://quantumiracle.github.io/webpage/blogs/files/simple_failure_cases.gif" alt="simple_failure_cases" style="zoom:150%;" />
-
-​                                             <figcaption>Videos from [project](https://phyworld.github.io/).</figcaption>
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/simple_failure_cases.gif" alt="vlp" style="zoom:150%;" /><figcaption>Videos from         <a href="https://phyworld.github.io/" target="_blank" rel="noopener noreferrer">project page</a>.</figcaption></figure>
 
 Research efforts such as [PhysGen](https://stevenlsw.github.io/physgen/) and [PhysDreamer](https://physdreamer.github.io/) explicitly incorporate physical parameters or models into the video generation process, aiming to enhance the physical reality of synthesized object motions.
 
 ### Unnatural Motion
 
-![hunyuan_cat](https://quantumiracle.github.io/webpage/blogs/files/hunyuan_cat.gif)
-
-​        <figcaption>A cat walks on the grass, realistic style, by [HunyuanVideo](https://arxiv.org/abs/2306.04710) model.</figcaption>
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/hunyuan_cat.gif" alt="vlp" style="zoom:100%;" /><figcaption>A cat walks on the grass, realistic style, by     <a href="https://arxiv.org/abs/2306.04710" target="_blank" rel="noopener noreferrer">HunyuanVideo</a> model.</figcaption></figure>
 
 Existing video generation models struggle significantly with  multi-object scenarios and fast motion, particularly when similar visual patterns occur in close proximity within a small spatial region across  frames. Examples include the rapid movements of human fingers, animal  legs, and entire animal bodies (as illustrated in the example above).  The primary challenge arises from the diffusion model's reliance on a  denoising process. In this context, nearby pixels that contain random noises tend to exhibit similarities in the latent noised space, leading to ambiguity for the diffusion model. This ambiguity hinders its ability to effectively differentiate between closely related yet distinct denoising trajectories.
 
@@ -139,7 +135,7 @@ These approaches represent significant strides towards creating  more versatile 
 
 To establish a foundational video world model, it is essential that the  model accommodates diverse control mechanisms. This challenge is evident in both robotics and gaming video models. In gaming engines, the action space varies significantly from one game to another due to differences  in control design and hardware interfaces. For instance, in the game *Street Fighter*, apart from standard motions, players can perform at least three distinct actions for kicks and three for punches, along with additional special moves and action  combinations. Conversely, other games may lack these specific actions or exhibit substantial variations in their implementation. Furthermore,  the unification of hardware interfaces presents another challenge, as  users may input commands through keyboards, mice, gamepads, or other  devices. 
 
-<img src="https://quantumiracle.github.io/webpage/blogs/files/sf_control_pad.png" alt="sf_control_pad" style="zoom:50%;" />
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/sf_control_pad.png" alt="vlp" style="zoom:50%;" /><figcaption>Control pad for StreetFigher games.</figcaption></figure>
 
 In robotics, the challenge of developing a unified control space  for foundational world models is exacerbated by the unique embodiments  of different robots, which result in varying degrees of freedom and  distinct action spaces. Each robot's design influences its control  mechanisms, leading to differences in latency and control modes, such as position, velocity, and impedance control. Different control modes can lead to  unpredictable latencies, which complicates the prediction of robot trajectories in videos.
 
@@ -149,9 +145,7 @@ Promising approaches have emerged to address these challenges,  although they ar
 
 As a projection from the 3D world, 2D video models inherently face theoretical challenges in fully capturing the spatial relationships and dynamics of three-dimensional spaces. Humans, by contrast, possess the innate ability to subconsciously construct mental representations of spatial environments—a cognitive skill referred to as *spatial intelligence*. This concept, rooted in psychology, has recently been highlighted in the work of  Feifei Li's [World Labs](https://www.worldlabs.ai/). The lack of 3D consistency relates to the broader issue of previously discussed physical reality but differs in that it may not necessarily require an understanding of physical laws. Instead, it primarily involves grasping the spatial structure of the world.
 
-<img src="https://quantumiracle.github.io/webpage/blogs/files/space_reason.gif" alt="space_reason" style="zoom:150%;" />
-
-​                                            <figcaption>Real video from [project](https://vision-x-nyu.github.io/thinking-in-space.github.io/).</figcaption>
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/space_reason.gif" alt="vlp" style="zoom:150%;" /><figcaption>Real video from       <a href="https://vision-x-nyu.github.io/thinking-in-space.github.io/" target="_blank" rel="noopener noreferrer">project</a>.</figcaption></figure>
 
 Visual understanding forms the foundation of spatial intelligence. Two main categories of methods exist for achieving visual understanding: (1). **Multimodal language models**. These follow strategies such as [Locked-image text tuning (LiT)](https://arxiv.org/abs/2111.07991), which fine-tune the text encoder to align with a frozen vision encoder pre-trained via self-supervised learning. Examples of this approach include [LLaVA](https://arxiv.org/abs/2304.08485) and [DINO.txt](https://www.arxiv.org/abs/2412.16334). (2). **Video sequence prediction models**. These focus on predicting future outcomes within the same visual format, as extensively discussed in previous paragraphs. These two approaches differ in their treatment of visual understanding. The first provides a linguistic representation of visual inputs, while the second predicts future visual sequences. Despite their differences, neither approach has yet achieved the level of spatial intelligence required to serve as a foundational world model.
 
@@ -163,13 +157,24 @@ In robotics foundation models, the absence of 3D information significantly impai
 
 An alternative and promising direction is the development of 3D world models, enabling interactive 3D agent exploration. However, this approach comes with a significant drawback: The collection of 3D data is significantly more resource-intensive than that of 2D video data, which can be captured using a single camera and offers access to virtually unlimited data resources in the physical world.
 
-<img src="https://quantumiracle.github.io/webpage/blogs/files/sora_robot.gif" alt="sora_robot" style="zoom:150%;" />
-
-​       		<figcaption>A robot stacking blocks. Video source: OpenAI Sora model.</figcaption>
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/sora_robot.gif" alt="vlp" style="zoom:150%;" /><figcaption>A robot stacking blocks. Video source: OpenAI Sora model.</figcaption></figure>
 
 ### Multimodality
 
 In addition to text and visual information, other modalities such as haptics and audio are crucial for specific tasks in the application of foundation models. For instance, in dexterous manipulation, humans heavily rely on haptic feedback from their hands to achieve stable grasping and perform fine-grained manipulations of complex objects and tasks. However, research on incorporating these additional modalities into foundation models remains underexplored and holds significant potential for advancing their capabilities.
+
+## Citation
+
+```
+@article{ding2024foundational,
+  title   = "Foundational Video World Model",
+  author  = "Ding, Zihan",
+  journal = "quantumiracle.github.io",
+  year    = "2024",
+  month   = "Dec",
+  url     = "https://quantumiracle.github.io/webpage/blogs/blog20241231.html"
+}
+```
 
 
 
