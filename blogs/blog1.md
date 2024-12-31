@@ -6,7 +6,7 @@ Date: 2024.12.31 | Author: Zihan Ding
 
 A foundational video world model is crucial for advancements in robotics (e.g., [video language planning](https://video-language-planning.github.io/), [diffusion forcing](https://boyuan.space/diffusion-forcing/)) and the next generation of game engines (e.g., [GameNGen](https://gamengen.github.io/), [GameGen-x](https://gamegen-x.github.io/), [Oasis](https://www.decart.ai/articles/oasis-interactive-ai-video-game-model), [Genie 2](https://deepmind.google/discover/blog/genie-2-a-large-scale-foundation-world-model/)), autonomous driving, etc. In robotics, such a model could enable access to an infinite amount of interaction data within realistic environments, moving beyond the limitations of non-realistic simulators. This breakthrough has the potential to bypass the long-standing simulation-to-reality gap that has impeded the research community for over a decade.
 
-<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/vlp.gif" alt="vlp" style="zoom:400%;" /><figcaption>Video source: video-language-planning project page.</figcaption></figure>
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files/vlp.gif" alt="vlp" style="zoom:200%;" /><figcaption>Video source: video-language-planning project page.</figcaption></figure>
 
 
 

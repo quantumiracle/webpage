@@ -34,6 +34,6 @@ def convert_mp4_to_gif(mp4_path, gif_path, start_time=None, end_time=None, resiz
         print(f"An error occurred: {e}")
 
 # Example usage:
-mp4_path = "mc_example.mp4"  # Path to your MP4 file
-gif_path = "mc_example.gif"       # Path to save the GIF
-convert_mp4_to_gif(mp4_path, gif_path, resize_factor=1)
+mp4_path = "space_reason.mp4"  # Path to your MP4 file
+gif_path = "space_reason.gif"       # Path to save the GIF
+convert_mp4_to_gif(mp4_path, gif_path, start_time=0, end_time=300, resize_factor=1)
