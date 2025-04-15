@@ -240,7 +240,7 @@ We explored the idea of **“shortcut” generation via self-consistency** in th
 
   <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_024.png" alt="vlp"/>
 
-  **Figure 38** shows sampling results for Shortcut model with integer class conditioning, after training 10 epochs.
+**Figure 38** shows sampling results for Shortcut model with integer class conditioning, after training 10 epochs.
 
 <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_025.png" alt="vlp"/>
 
