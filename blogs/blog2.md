@@ -244,7 +244,7 @@ We explored the idea of **“shortcut” generation via self-consistency** in th
 
 <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_025.png" alt="vlp"/>
 
-​	**Figure 39** shows sampling results for Shortcut model with one-hot class conditioning, after training 10 	epochs.
+​		**Figure 39** shows sampling results for Shortcut model with one-hot class conditioning, after training 10 	epochs.
 
 <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_026.png" alt="vlp"/>
 
