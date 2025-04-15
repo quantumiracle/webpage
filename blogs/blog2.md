@@ -78,11 +78,11 @@ We built a **Diffusion Transformer (DiT)** model for image generation, broadly f
 
   **Figure 10** shows the training loss curves for different numbers of diffusion blocks for DiT on MNIST image generation.
 
-  ![](assets_doc/doc_img_009.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_009.png" alt="vlp"/>
 
   **Figure 11** shows depth-4 DiT sampling results.
 
-  ![](assets_doc/doc_img_005.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_005.png" alt="vlp"/>
 
   **Figure 12** shows depth-6 DiT sampling results.
 
@@ -92,15 +92,15 @@ We built a **Diffusion Transformer (DiT)** model for image generation, broadly f
 
 - **2D vs. 3D Attention:** We conducted an interesting variant of the DiT: treating the input as a trivial “video” with an added time/frame dimension of size 1. In other words, we fed the images as shape (B, C, H, W) normally, and also as (B, **1**, C, H, W) to a **3D Transformer** that performs self-attention across height, width, *and* the extra temporal dimension. The idea was to simulate a video-diffusion Transformer (which attends over space and time) even though we only have one frame – essentially to test if the architecture could generalize to an extra dimension without issue. We applied *sinusoidal* positional embeddings for the frame dimension. As expected, the 3D DiT functioned correctly, but it was much heavier computationally: we had to halve the batch size due to increased memory use (since attention now considers an extra dimension). In terms of results, **the 3D-attention model did not show any clear advantage over the standard 2D-attention model** on single-frame data. The sample quality and loss were similar (once we adjusted for the smaller batch). This is reassuring in that the Transformer can seamlessly incorporate an extra spatial dimension, but it also confirms that if there is no actual variability in that dimension (only one frame), you don’t gain anything by attending over it. In a real video generation scenario with multiple frames, a 3D DiT could model temporal correlations directly. Our little experiment serves as a sanity check: introducing a dummy extra dimension doesn’t break the model (just slows it down), and by extension we anticipate that a true multi-frame (video) diffusion Transformer would behave reasonably – albeit with significant memory costs. (Notably, recent video diffusion models often combine 2D spatial attention with temporal attention in blocks, rather than full 3D attention everywhere ([Benchmarking and Improving Video Diffusion Transformers For ...](https://arxiv.org/html/2503.17350v1#:~:text=Benchmarking%20and%20Improving%20Video%20Diffusion,Furthermore%2C)), to save compute.)
 
-  ![](assets_doc/doc_img_011.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_011.png" alt="vlp"/>
 
   **Figure 13** shows the training loss curves for 2D DiT  and 3D DiT on MNIST image generation.
 
-  ![](assets_doc/doc_img_005.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_005.png" alt="vlp"/>
 
   **Figure 14** shows 2D DiT sampling results.
 
-  ![](assets_doc/doc_img_010.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_010.png" alt="vlp"/>
 
   **Figure 15** shows 3D DiT sampling results.
 
@@ -112,19 +112,19 @@ To ground our findings, we also ran diffusion experiments using the **U-Net arch
 
 - **Diffusion Steps (U-Net):** Just as with the DiT, we tried training a U-Net diffusion model with 1000, 400, and 40 timesteps. The trend was the same: **1000 timesteps yielded the best and fastest-converging results**, 400 was slightly worse in loss but similar for sampling performances, and 40 was markedly worse. Even for the convolutional U-Net, reducing the number of diffusion steps made it harder to model the data distribution. After the same number of training epochs, the 1000-step U-Net had the lowest loss, the 400-step model a bit higher, and the 40-step model highest. The final sample quality reflected this: with 1000 steps, the generated digits were very crisp; with 400 they were mostly good with an occasional flaw; with only 40 steps, many samples were fuzzy or looked like interpolations between multiple digits. Clearly, **the U-Net needs a sufficiently fine diffusion process to capture the data well** – short processes (40 steps) did not give it enough gradual refinement stages, so generation quality suffered. This mirrors what we saw in the Diffusion Transformer case, suggesting that the requirement for many steps is a general phenomenon for diffusion loss, not specific to model type. It’s worth noting that there are methods to **speed up sampling** at inference (e.g. skipping steps or using learned samplers), but those usually still train with a large T (often 1000) to learn the detailed score function before distilling it down. Our results reaffirm that if one tries to train a diffusion model with too few steps from the start, it’s difficult to reach the same quality as a longer process.
 
-  ![](assets_doc/doc_img_012.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_012.png" alt="vlp"/>
 
   **Figure 16** shows the training loss curves for different step counts with Diffusion U-Net.
 
-  ![](assets_doc/doc_img_013.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_013.png" alt="vlp"/>
 
   **Figure 17** shows Diffusion U-Net 1000-step sampling results.
 
-  ![](assets_doc/doc_img_014.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_014.png" alt="vlp"/>
 
   **Figure 18** shows Diffusion U-Net 400-step sampling results.
 
-  ![](assets_doc/doc_img_015.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_015.png" alt="vlp"/>
 
   **Figure 19** shows Diffusion U-Net 40-step sampling results.
 
@@ -132,13 +132,11 @@ To ground our findings, we also ran diffusion experiments using the **U-Net arch
 
 - **Classifier-Free Guidance (CFG):** We experimented with **guidance scale** during inference, a technique introduced by Ho & Salimans (2022) that trades off diversity for fidelity in conditional diffusion models ([Classifier-free Guidance with Adaptive Scaling - arXiv](https://arxiv.org/html/2502.10574v1#:~:text=Classifier,over%20the%20generative%20process)). In classifier-free guidance, one uses an unconditional model in combination with the conditional model to push samples toward the conditioning signal. The *guidance weight* (often denoted $w$ or $s$) determines how strongly the model leans into the conditional signal. We generated samples from the class-conditional U-Net with a high CFG weight (e.g. $w=2.0$) versus a low weight ($w=0.5$). As expected, **larger guidance weights produced much clearer and more class-consistent digits**, while low weights led to more muddled outputs. For instance, with $w=2.0$, when asking for a “7” the model produced a sharp, well-defined 7; at $w=0.5$, the result might appear ambiguous between a 7 and something else (or just blurrier). This aligns perfectly with known behavior of classifier-free guidance: *increasing the guidance scale dramatically improves sample fidelity*, making the outputs more closely match the condition, at the cost of some diversity (and potentially introducing minor artifacts if pushed too high). In our MNIST case, diversity isn’t a big concern (each class has a fairly narrow range of outputs), so a higher CFG weight was strictly beneficial for visual quality. The takeaway is that **using sufficient guidance is important for conditional diffusion** – it can significantly enhance the clarity of samples. One should be mindful to find a good range (in our tests, values around 1.5–2.5 were best; extremely high values can sometimes distort outputs). 
 
-  ![](assets_doc/doc_img_014.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_014.png" alt="vlp"/>
 
   **Figure 20** shows Diffusion U-Net 400-step with CFG $w=2.0$ sampling results.
 
-  
-
-  ![](assets_doc/doc_img_016.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_016.png" alt="vlp"/>
 
   **Figure 21** shows Diffusion U-Net 400-step with CFG $w=0.5$ sampling results.
 
@@ -154,23 +152,23 @@ To ground our findings, we also ran diffusion experiments using the **U-Net arch
 
 We implemented a **Flow Matching Transformer** (essentially a Transformer-based continuous flow model) on MNIST and compared it with the Diffusion Transformer (DiT) from earlier. A striking result was that **the flow matching model achieved comparable performance to the DiT** in roughly half the training epochs. For example, after only 10 epochs of training, the flow model’s sample quality and loss were about on par with the DiT’s performance at 20 epochs. By 20 epochs, the flow model slightly surpassed the DiT. This suggests that **Flow Matching can learn the generative mapping faster** than the diffusion training procedure in our setup. One reason could be that FM optimizes a simpler objective (a direct regression of the continuous-time score field) without the stochastic noise of simulating many discrete diffusion steps. Chen et al. (2023) reported that using flow matching with appropriate probability paths yields more stable and data-efficient training than diffusion, and our experiment supports the notion that *fewer epochs* may be needed to reach a given likelihood or quality level. This is encouraging because faster convergence directly translates to less compute for model training. 
 
-![](assets_doc/doc_img_017.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_017.png" alt="vlp"/>
 
 **Figure 22** shows the training loss curves for Flow Matching Transformer.
 
-![](assets_doc/doc_img_018.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_018.png" alt="vlp"/>
 
 **Figure 23** shows sampling results after 10 epochs  for Flow Matching Transformer.
 
-![](assets_doc/doc_img_019.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_019.png" alt="vlp"/>
 
 **Figure 24** shows sampling results after 20 epochs for Flow Matching Transformer.
 
-![](assets_doc/doc_img_020.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_020.png" alt="vlp"/>
 
 **Figure 25** shows sampling results after 10 epochs for DiT.
 
-![](assets_doc/doc_img_005.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_005.png" alt="vlp"/>
 
 **Figure 26** shows sampling results after 20 epochs for DiT.
 
@@ -180,15 +178,15 @@ We implemented a **Flow Matching Transformer** (essentially a Transformer-based 
 
 We also tested some tweaks to the flow matching objective to potentially improve training efficiency. In [FasterDiT](https://arxiv.org/abs/2410.10356), they proposed to improve the efficiency for training using the **$v$-direction** loss which additionally minimizes the directional divergence of predicted velocity and ground truth, and we also experimented with re-weighting the time variable (using a log-normal distribution of time steps during training, referred to as *log-norm t* in our notes), as well as input standard deviation scaling trick. The paper suggests that these changes can further speed up convergence or improve quality. **The outcome, however, was that these modifications did not significantly change the performance**. In our simple experiments, the **flow model with $v$-direction loss, log-time weighting and standard deviation scaling** (with target 0.82 as suggested by the paper), trained to almost the same loss as the standard flow model. 
 
-![](assets_doc/doc_img_022.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_022.png" alt="vlp"/>
 
 **Figure 27** shows the training loss curves for FasterDiT (based on flow matching), with $v$-direction loss, *log-norm t* and standard deviation scaling tricks.
 
-![](assets_doc/doc_img_021.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_021.png" alt="vlp"/>
 
 **Figure 28** shows sampling results after 10 epochs for FasterDiT, with $v$-direction loss, *log-norm t* tricks.
 
-![](assets_doc/doc_img_023.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_023.png" alt="vlp"/>
 
 **Figure 29** shows sampling results after 10 epochs for FasterDiT, with $v$-direction loss, *log-norm t* and standard deviation scaling (with target 0.82) tricks.
 
@@ -200,19 +198,19 @@ We explored the idea of **“shortcut” generation via self-consistency** in th
 
 * **Inference steps:** We tried generation with the standard 128 integration steps (same 128 steps used in training), as well as truncated to 4 steps, 2 steps, and even 1 step for inference (training still 128 steps). The results showed that **the flow matching part was learned well (128-step generation was excellent), but the self-consistency part was not strong enough** – the 1-step and 2-step generations were still very poor (essentially indistinguishable noise or highly blurry digits), and 4-step was slightly better but nowhere near the quality of 128 steps. 
 
-![](assets_doc/doc_img_027.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_027.png" alt="vlp"/>
 
 **Figure 30** shows sampling results for Shortcut model with 1-step inference, after training 20 epochs.
 
-![](assets_doc/doc_img_028.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_028.png" alt="vlp"/>
 
 **Figure 31** shows sampling results for Shortcut model with 2-step inference, after training 20 epochs.
 
-![](assets_doc/doc_img_029.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_029.png" alt="vlp"/>
 
 **Figure 32** shows sampling results for Shortcut model with 4-step inference, after training 20 epochs.
 
-![](assets_doc/doc_img_030.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_030.png" alt="vlp"/>
 
 **Figure 33** shows sampling results for Shortcut model with 128-step inference, after training 20 epochs.
 
@@ -220,19 +218,19 @@ We explored the idea of **“shortcut” generation via self-consistency** in th
 
 * **Training epochs:** Even after extending training to 200 epochs (10× longer), the one-step generation remained unsatisfactory, improving only marginally. This highlights a crucial lesson: **achieving high-quality one-step generation is very challenging**. Our attempt indicates that simply adding a small fraction of consistency loss is insufficient for the model to master the extremely nonlinear mapping from pure noise to data in one go. This is in line with observations by consistency model researchers – Jonathan Heek et al. (2024) noted that consistency models (single-step models) are much harder to train than diffusion models ([Multistep Consistency Models](https://arxiv.org/abs/2403.06807#:~:text=,model%20is%20a%20diffusion%20model)), and they proposed *Multistep Consistency Models* as a compromise that allows a spectrum between one-step and many-step generation. Their results show that allowing 2 to 8 steps greatly eases training while still giving big speedups in sampling. Our experiment reinforces that finding: our flow model could generate decent images in 4 or more steps, but collapsed at 1–2 steps. It likely needs a dedicated training recipe (or distillation from a many-step teacher, as done in consistency distillation) to successfully generate in one step.
 
-  ![](assets_doc/doc_img_031.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_031.png" alt="vlp"/>
 
   **Figure 34** shows sampling results for Shortcut model with 1-step inference, after training 200 epochs.
 
-  ![](assets_doc/doc_img_032.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_032.png" alt="vlp"/>
 
   **Figure 35** shows sampling results for Shortcut model with 2-step inference, after training 200 epochs.
 
-  ![](assets_doc/doc_img_033.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_033.png" alt="vlp"/>
 
   **Figure 36** shows sampling results for Shortcut model with 4-step inference, after training 200 epochs.
 
-  ![](assets_doc/doc_img_034.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_034.png" alt="vlp"/>
 
   **Figure 37** shows sampling results for Shortcut model with 128-step inference, after training 200 epochs.
 
@@ -240,15 +238,15 @@ We explored the idea of **“shortcut” generation via self-consistency** in th
 
 * **Class Conditioning Format:** Another parallel with the diffusion experiments was class conditioning. We applied the same class conditioning approach in the flow model (i.e. providing either a **one-hot class vector embedding or an integer label embedding**). The flow model’s behavior mirrored what we saw before in DiT and Diffusion U-Net: **one-hot conditioning was significantly better**. The Flow Matching Transformer trained with one-hot class input produced clearly distinguishable digits of each class, whereas using an embedded integer class ID led to confusion and poorer quality. This consistency reinforces the earlier point – no matter the generative training paradigm (diffusion or flow), giving the model a clean, explicit representation of the conditioning signal (like a one-hot vector) makes it much easier for the model to utilize that information. So for flow matching models, one should also prefer one-hot or similarly expressive conditioning inputs, especially for small-scale tasks.
 
-  ![](assets_doc/doc_img_024.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_024.png" alt="vlp"/>
 
   **Figure 38** shows sampling results for Shortcut model with integer class conditioning, after training 10 epochs.
 
-![](assets_doc/doc_img_025.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_025.png" alt="vlp"/>
 
 ​	**Figure 39** shows sampling results for Shortcut model with one-hot class conditioning, after training 10 	epochs.
 
-![](assets_doc/doc_img_026.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_026.png" alt="vlp"/>
 
 ​	**Figure 40** shows sampling results for Shortcut model with one-hot class conditioning, after training 10 epochs.
 
@@ -262,13 +260,13 @@ Finally, we turn to the **design of the tokenizer** in latent diffusion models. 
 
 First, we tried a **single-layer 2D convolution as the tokenizer**. This convolution had kernel size and stride equal to a patch size (e.g. 2), effectively “patchifying” the image into non-overlapping patches and projecting them linearly to token embeddings (and a corresponding deconvolution to reconstruct). In theory, if the patch size is 2×2 on a 1-channel image, each patch has 4 pixels – so *4 numbers can perfectly represent that patch*. Thus, the **minimal token embedding dimension** needed to **losslessly encode** a 2×2 patch is 4. We indeed found that a token dimensionality of 4 was sufficient to reconstruct the images (the tokenizer+decoder could learn an identity mapping). However, when we trained a diffusion transformer on these tokens, the model with token dim = 4 learned rather slowly. If we increased the token embedding dimension (say to 8, 16, or higher), the diffusion model’s training **converged faster, even though ultimately it reached a similar final loss**. In other words, giving the model more degrees of freedom per token (beyond the bare minimum) made optimization easier, at least initially. This makes sense: a higher-dimensional token can capture redundant or rich features of the image patch, which the transformer can leverage in modeling; with an exactly minimal token (4 numbers representing 4 pixels), the model has to work harder to infer relationships because there’s no extra capacity to encode higher-level abstractions at the token level. The downside of larger token dimensions, however, is that the **tokenizer starts to over-represent the data**, potentially making generation harder. We noted that extremely high-dimensional tokens can lead to overfitting or poor generation quality if the diffusion model isn’t scaled up accordingly. This phenomenon – *improving reconstruction vs. harming generation* – was recently discussed by [Yao et al. (2025)](https://arxiv.org/pdf/2501.01423). They observed an **“optimization dilemma”** in latent diffusion: **increasing the per-token feature dimension improves reconstructions of the input, but it requires a substantially larger diffusion model and more training to achieve comparable generation performance**. Otherwise, generation quality drops with high token dimension. Our findings are in line with this: a token dim of 4 (minimal) gave perfect reconstructions but training was slow; a very large token dim would reconstruct easily but make it hard for the diffusion model to generalize (since the latent space becomes high-dimensional and unconstrained). Thus, there’s a sweet spot where the token dimension is *slightly above the theoretical minimum* – providing some redundancy for easier modeling – but not too large to overwhelm the diffusion model. In our case, token dims in the range of 8–16 seemed to work well for the small data.
 
-![](assets_doc/doc_img_035.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_035.png" alt="vlp"/>
 
 ​	**Figure 41** shows training curves for 1D convolutional tokenizer (equivalent patch size 2x2) with different token embedding dimensions, by MINST image encoding-decoding loss.
 
 We extended this experiment to a **2-layer convolutional tokenizer** (applying two convs with kernel size=stride=2, effectively a 4×4 patch overall). In that scenario, a 4×4 patch from the image has 16 pixels, so the minimal token vector length after two layers of downsampling would be 16. We found a very similar pattern: **16-dimensional tokens were sufficient but slow to train**, while larger token dims (e.g. 32 or 64) learned faster initially. Again, all eventually converged to comparable reconstruction fidelity, but the diffusion model trained on higher-dim tokens tended to reach lower loss quicker. The general insight across these tests is that **token embedding dimensionality is a trade-off**: enough dimensions to make learning easy, but not so many that the latent space is unnecessarily large for the generative model to handle.
 
-![](assets_doc/doc_img_036.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_036.png" alt="vlp"/>
 
 ​	**Figure 42** shows training curves for 2D convolutional tokenizer (equivalent patch size 4x4) and different token embedding dimensions, by MINST image encoding-decoding loss.
 
@@ -278,7 +276,7 @@ To experiment with small token dims, we decoupled the tokenizer dimension from t
 
 Moreover, **reducing token dimension provides only a limited computational gain overall** – it saves some work in the token projection layers, but the bulk of computation is in the Transformer’s attention and feed-forward layers, which still run in the higher hidden dimension. So, the benefit of making token dim extremely small is modest, yet it can hurt generative performance disproportionately. 
 
-![](assets_doc/doc_img_037.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_037.png" alt="vlp"/>
 
 **Figure 43** shows training curves for DiT (patch size 2x2) with different token embedding dimensions (*hidden_size* in figure), like 16, 128 and 256, for MNIST image generation. Theoretically, for patch size 2x2 the token embedding dimension 4 should be sufficient to allow loseless encoding, but practical DiT training shows that even dimension 16 does not learn well. Theoretically the three curves could converge to the same optimal loss values, but are almost impossible in practice. The larger the models, the more significant difference of training efficiency is observed by varying token embedding dimensions.
 
