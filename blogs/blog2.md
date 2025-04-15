@@ -18,7 +18,7 @@ This suggests that the added complexity of compressing and retrieving long-term 
 
 ### Normalization-Free Networks
 
-![](assets_doc/doc_img_001.png)
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_001.png" alt="vlp"/>
 
 **Figure 2** illustrates the training loss curves for *Dynamic Tanh* (DyT) and RMSNorm (vanilla)
 
@@ -34,23 +34,23 @@ We built a **Diffusion Transformer (DiT)** model for image generation, broadly f
 
 - **Number of Diffusion Timesteps:** We compared using the standard ~$1000$ timesteps (as in DDPM ([experiment.md](file://file-Ei3Q8tCqFntiXVJhWvjZrN#:~:text=DDPM%20timesteps))) versus greatly reduced counts (e.g. 400 or 40 steps). We found that using **1000 diffusion steps led to faster convergence and a lower final loss** than fewer steps. In fact, on MNIST the model with 1000 steps not only reached a slightly better loss than the 400-step model, but *significantly* outperformed a model trained with only 40 steps. Intuitively, a diffusion process with more timesteps means each denoising step is smaller and easier to learn, which likely makes optimization simpler – the model can focus on removing a tiny bit of noise at a time. With too few steps, each step must denoise a large amount of noise, which proved much harder for the Transformer to learn (the 40-step model struggled to reconstruct digits clearly). This observation is consistent with the original DDPM work that employed 1000 steps, and it mirrors the trade-off in diffusion models: more steps improve generation fidelity but at the cost of slower sampling. 
 
-![](assets_doc/doc_img_002.png)**Figure 3** shows the training loss curves for different step counts – the 1000-step curve dives down fastest and ends lowest, while the 40-step curve converges to a higher loss. In practice, one might use advanced samplers to reduce sampling time, but when training from scratch, having a sufficiently fine discretization of the diffusion process is clearly beneficial.
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_002.png" alt="vlp"/>
+
+**Figure 3** shows the training loss curves for different step counts – the 1000-step curve dives down fastest and ends lowest, while the 40-step curve converges to a higher loss. In practice, one might use advanced samplers to reduce sampling time, but when training from scratch, having a sufficiently fine discretization of the diffusion process is clearly beneficial.
 
 
 
 - **Patch Size:** In our DiT, images are split into patches that become token inputs to the Transformer, following Vision Transformer practice. We experimented with different patch sizes for 28×28 grayscale MNIST (patch sizes 1×1 vs 2×2). The results were striking – using **1×1 patches (i.e. each pixel as a token) was critical to get good performance**, whereas 2×2 patches caused a significant drop in generation quality. Essentially, a 2×2 patch means each token represents a 4-pixel block of the image; for MNIST digits (which have fine details like thin strokes), this coarse patchification loses important information. The model with 2×2 patches often produced blurry or incomplete digits, indicating underfitting. In contrast, the model with 1×1 patches (effectively treating the image like a 784-length sequence of pixels) learned to generate clearly recognizable digits, albeit with a slightly lower fidelity than an equivalent U-Net. This suggests that **for high-resolution or detail-critical data, the patch size must be small enough to capture essential local structure**. Our finding aligns with the general understanding that Vision Transformers require appropriately sized patches – too large patches reduce the granularity of input features. (For instance, recent latent diffusion models use patch-like tokenizers but operate on high-level feature maps where some loss of spatial detail is acceptable ([Reconstruction vs. Generation](https://arxiv.org/pdf/2501.01423)). In the case of raw MNIST pixels, any patch larger than 1×1 was detrimental. In future work on DiT for higher-resolution images, one might incorporate convolutional preprocessing or hierarchical tokens to avoid this issue, or use learned tokenizers that compress without losing critical detail.
 
-  ![](assets_doc/doc_img_003.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_003.png" alt="vlp"/>
 
   **Figure 4** shows the training loss curves for different patch size for MNIST image generation.
 
-  ![](assets_doc/doc_img_004.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_004.png" alt="vlp"/>
 
   **Figure 5** shows patch size 2x2 sampling results.
 
-  
-
-  ![](assets_doc/doc_img_005.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_005.png" alt="vlp"/>
 
   **Figure 6** shows patch size 1x1 sampling results.
 
@@ -58,15 +58,15 @@ We built a **Diffusion Transformer (DiT)** model for image generation, broadly f
 
 - **Class Conditioning Format:** We also explored how to feed class labels into the conditional diffusion model. MNIST has 10 classes (digits 0–9). One approach is **one-hot encoding** the class (a 10-dimensional vector with a 1 at the class index) and injecting it into the model (e.g. concatenating to token embeddings or through a conditioning layer). Another approach is to use a single integer label and let the model internally embed it (essentially a learned embedding lookup). In our experiments, the **one-hot conditioning dramatically outperformed the single embedded label**. With one-hot conditioning, the generated samples correctly and sharply reflected the conditioning class. When we used an integer label with an embedding (same embedding dimension), the model’s outputs were much less accurate to the class and often of lower visual quality. We suspect that one-hot encoding provided a richer, high-signal input for each class – effectively giving the network 10 “channels” to distinctly activate for each class – whereas a learned embedding might be harder to propagate through the Transformer or might not disentangle class information as well in a small model. This is a noteworthy insight: **for conditional diffusion on a small-scale problem, a simple one-hot conditioning vector can be a better choice than a learned class embedding, although barely reflected from the training curves**. It ensures the conditioning information is explicit and easily accessible to every part of the network. In larger models (e.g. big image-generation transformers or language models), learned embeddings are standard, but our result suggests that at least for small architectures or when data is limited, one-hot features may ease the learning of conditioning. (It’s akin to how some small CNNs benefit from one-hot inputs in early layers instead of a single label embedding.)
 
-  ![](assets_doc/doc_img_006.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_006.png" alt="vlp"/>
 
   **Figure 7** shows the training loss curves for one-hot vs. integer class condition for DiT on MNIST image generation.
 
-  ![](assets_doc/doc_img_005.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_005.png" alt="vlp"/>
 
   **Figure 8** shows one-hot condition sampling results.
 
-  ![](assets_doc/doc_img_007.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_007.png" alt="vlp"/>
 
   **Figure 9** shows integer (no one-hot) condition sampling results:
 
@@ -74,7 +74,7 @@ We built a **Diffusion Transformer (DiT)** model for image generation, broadly f
 
 - **Model Depth:** We trained DiT models with different numbers of Transformer blocks (layers) to see the effect of network depth. Not surprisingly, **a deeper Transformer yielded better performance** – e.g. a 6-block DiT achieved lower loss and generated digits with fewer artifacts compared to a 4-block DiT (which in turn was better than a 2-block version, and so on). This trend is consistent with the general understanding that increasing model capacity (to a point) improves generative performance. A deeper model can capture more complex patterns and has higher expressive power. In our case, going from 4 to 6 layers made a noticeable difference in output clarity. Of course, deeper models train slower and are more memory intensive; one must balance resources. But given the improvements we saw, scaling up depth is a straightforward way to get better diffusion model results. This mirrors observations in the literature that **larger diffusion models produce higher fidelity samples** (for example, Guided Diffusion improved class-conditional ImageNet generation by scaling up model size along with other tweaks). In practice, one might combine depth with other efficiency tricks (like gradient checkpointing or sparse attention) to manage the compute cost.
 
-  ![](assets_doc/doc_img_008.png)
+  <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_008.png" alt="vlp"/>
 
   **Figure 10** shows the training loss curves for different numbers of diffusion blocks for DiT on MNIST image generation.
 
