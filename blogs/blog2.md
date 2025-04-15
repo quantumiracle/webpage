@@ -68,7 +68,7 @@ We built a **Diffusion Transformer (DiT)** model for image generation, broadly f
 
   <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_007.png" alt="vlp"/>
 
-  **Figure 9** shows integer (no one-hot) condition sampling results:
+  **Figure 9** shows integer (no one-hot) condition sampling results.
 
   
 
