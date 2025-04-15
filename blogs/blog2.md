@@ -200,19 +200,19 @@ We explored the idea of **“shortcut” generation via self-consistency** in th
 
 <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_027.png" alt="vlp"/>
 
-**Figure 30** shows sampling results for Shortcut model with 1-step inference, after training 20 epochs.
+​	**Figure 30** shows sampling results for Shortcut model with 1-step inference, after training 20 epochs.
 
 <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_028.png" alt="vlp"/>
 
-**Figure 31** shows sampling results for Shortcut model with 2-step inference, after training 20 epochs.
+​	**Figure 31** shows sampling results for Shortcut model with 2-step inference, after training 20 epochs.
 
 <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_029.png" alt="vlp"/>
 
-**Figure 32** shows sampling results for Shortcut model with 4-step inference, after training 20 epochs.
+​	**Figure 32** shows sampling results for Shortcut model with 4-step inference, after training 20 epochs.
 
 <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_030.png" alt="vlp"/>
 
-**Figure 33** shows sampling results for Shortcut model with 128-step inference, after training 20 epochs.
+​	**Figure 33** shows sampling results for Shortcut model with 128-step inference, after training 20 epochs.
 
 
 
@@ -240,7 +240,7 @@ We explored the idea of **“shortcut” generation via self-consistency** in th
 
   <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_024.png" alt="vlp"/>
 
-**Figure 38** shows sampling results for Shortcut model with integer class conditioning, after training 10 epochs.
+  **Figure 38** shows sampling results for Shortcut model with integer class conditioning, after training 10 epochs.
 
 <figure><img src="https://quantumiracle.github.io/webpage/blogs/files2/doc_img_025.png" alt="vlp"/>
 
