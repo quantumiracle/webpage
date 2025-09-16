@@ -46,11 +46,11 @@ One main stream of this research was leveraging diffusion models’ expressive p
 
 ## Reflections on AGI and ASI
 
-In terms of paradigm, standard RL is strong at improving any constructed metric with verifiable answers but is limited by human capacity to provide judgments first. I think this paradigm can achieve AGI over time, with my definition of AGI as “*a system that can beat most average humans at most (or all) common intellectual tasks*”.
+In terms of paradigm, standard RL is strong at improving any constructed metric with verifiable answers but is limited by human capacity to provide judgments first. I think this paradigm can achieve AGI over time, with my definition of artificial general intelligence (AGI) as “*a system that can beat most average humans at most (or all) common intellectual tasks*”.
 
 If common tasks include the physical tasks of daily human life, then an AGI system should naturally extend to supporting general-purpose robots. However, given the scarcity of physical-world data, I doubt such robots will emerge anytime soon. For this reason, the definition of AGI here emphasizes “intellectual” tasks, deliberately excluding physical ones. From my perspective, building a general-purpose robot may in fact require the prior existence of AGI in intellectual tasks, at least for visual understanding, semantic reasoning and planning. Only then could we claim to have a true AGI system—one that surpasses the average human across all common tasks. 
 
-Beyond the current human limit, automating verification and further optimizing the system with RL can surpass human intelligence through mutual bootstrapping across models. This may achieve ASI, which I define as “*a system that can beat the best human in each common intellectual task*”.
+Beyond the current human limit, automating verification and further optimizing the system with RL can surpass human intelligence through mutual bootstrapping across models. This may achieve artificial superintelligence (ASI), which I define as “*a system that can beat the best human in each common intellectual task*”.
 
 As for the consequences of AGI and ASI, I am concerned about the potential polarization of social power and wealth. A small minority that controls such superintelligence could come to dominate the economy. At present, I don’t see a clear solution to this problem.
 
