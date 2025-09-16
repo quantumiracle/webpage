@@ -52,7 +52,7 @@ If common tasks include the physical tasks of daily human life, then an AGI syst
 
 Beyond the current human limit, automating verification and further optimizing the system with RL can surpass human intelligence through mutual bootstrapping across models. This may achieve artificial superintelligence (ASI), which I define as “*a system that can beat the best human in each common intellectual task*”.
 
-As for the consequences of AGI and ASI, I am concerned about the potential polarization of social power and wealth. A small minority that controls such superintelligence could come to dominate the economy. At present, I don’t see a clear solution to this problem.
+As for the consequences of AGI and ASI, I am concerned about the potential polarization of social power and wealth. A small minority that controls such superintelligence could come to dominate the economy and even governing authority. At present, I don’t see a clear solution to this problem.
 
 
 **Salute to all the people I met along the way who supported and helped me.**
