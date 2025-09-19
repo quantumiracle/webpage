@@ -1,6 +1,6 @@
 # Conscious AI Agents and Alignment
 
-Date: 2025.09.15 | Author: Zihan Ding & GPT5
+Date: 2025.09.19 | Author: Zihan Ding & GPT5
 
 ## Introduction  
 Can a machine ever truly **understand** its own limitations? This question lies at the intersection of logic, computability, and AI alignment. In the mid-20th century, logicians like Kurt Gödel shocked mathematics by showing that any sufficiently powerful formal system inevitably contains true statements it cannot prove. Decades later, thinkers like Lucas and Penrose argued that human minds transcend what any algorithm can do, because a person can see the truth of a statement that a machine (following fixed rules) cannot. In modern AI alignment discourse, researchers grapple with similar puzzles: Can an AI predict or model itself without running into paradoxes? Are there fundamental limits to a computable system’s ability to **be certain** about its own behavior or to reliably evaluate the safety of another agent? 
@@ -8,6 +8,11 @@ Can a machine ever truly **understand** its own limitations? This question lies 
 In this post, we’ll explore how classic results – Gödel’s Incompleteness Theorem, Rice’s Theorem, and Kleene’s Recursion Theorem – provide a foundation for understanding these questions. We will introduce the notion of a *conscious agent* as one who can (truthfully) declare “**I am not computable**,” and examine how such a statement invokes a Gödel-style diagonalization. We’ll see that if a purportedly conscious agent were actually a computable machine, it would lead to a contradiction; if instead the agent is non-computable, it illustrates an inherent incompleteness in any computational theory that tries to capture it. Along the way, we’ll discuss the critical role of **self-reference** – how an agent or program referring to (or modeling) itself can create logical knots. We will clarify under what formal conditions an agent can *diagonalize* against a predictor (for example, whether the agent has access to the predictor’s code as a subroutine). Finally, we’ll connect these ideas to debates by Lucas and Penrose on minds vs. machines, and to modern AI alignment considerations raised by organizations like MIRI. The implications for AI safety are both intriguing and cautionary: they suggest limits on how completely a computable system can model a self-aware agent, highlight risks when agents begin modeling or outsmarting their predictors, and show how reflectivity and undecidability might complicate alignment. 
 
 Throughout, we aim for a philosophically exploratory yet rigorous tone – heavy formalism will be explained in lighter terms. Let’s begin by reviewing the key theoretical pillars.
+
+
+<figure><img src="https://quantumiracle.github.io/webpage/blogs/files4/conscious_agent.png" alt="vlp"/>
+
+ **Figure**: A sufficiently powerful AI agent with accurate modeling of the predictor can achieve diagonal self-reference, then the whole computational system becomes undecidable about the agent's property: whether it is computable or, has consciousness.
 
 ## Foundations: Incompleteness and Undecidability  
 
