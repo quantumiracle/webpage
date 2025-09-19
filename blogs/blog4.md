@@ -12,7 +12,7 @@ Throughout, we aim for a philosophically exploratory yet rigorous tone – heavy
 
 <figure><img src="https://quantumiracle.github.io/webpage/blogs/files4/conscious_agent.png" alt="vlp"/>
 
- **Figure**: A sufficiently powerful AI agent with accurate modeling of the predictor can achieve diagonal self-reference, then the agent's property becomes undecidable for whole computational system: whether the agent is computable or, has consciousness.
+ **Figure**: A sufficiently powerful AI agent with accurate modeling of the predictor can achieve diagonal self-reference, then the agent's property becomes undecidable for whole computational system: whether the agent is computable, or has **consciousness**.
 
 ## Foundations: Incompleteness and Undecidability  
 
