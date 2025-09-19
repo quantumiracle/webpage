@@ -121,13 +121,24 @@
 
     <script>
         async function loadMarkdown() {
-            try {
-                // Fetch the Markdown file
-                const response = await fetch('blog4.md'); // Ensure 'blog-post.md' is in the same directory
-                const mdText = await response.text();
+            // try {
+            //     // Fetch the Markdown file
+            //     const response = await fetch('blog4.md'); // Ensure 'blog-post.md' is in the same directory
+            //     const mdText = await response.text();
 
-                // Render Markdown content to HTML
-                document.getElementById('blog-content').innerHTML = marked.parse(mdText);
+            //     // Render Markdown content to HTML
+            //     document.getElementById('blog-content').innerHTML = marked.parse(mdText);
+            try {
+            const response = await fetch('blog4.md');
+            const mdText = await response.text();
+
+            // Render Markdown into HTML
+            document.getElementById('blog-content').innerHTML = marked.parse(mdText);
+
+            // Trigger MathJax to typeset math
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
             } catch (error) {
                 document.getElementById('blog-content').innerHTML = `
             <div style="color: red;">
