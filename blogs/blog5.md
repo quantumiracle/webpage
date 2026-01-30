@@ -11,8 +11,7 @@ Competition becomes more intense every day. People in frontier labs work overtim
 
 Those researchers and engineers who struggled for years, studying quietly, working on cold benches, finally step into the spotlight and find ways to obtain outsized returns. Some actively choose to join this game; many more are dragged into it without mercy. The flood has already started to flow, and everyone will be pulled into the depths of the vortex.
 
-**What are we actually creating?  
-AGI?**
+**What are we actually creating?  AGI?**
 
 Inside this system—OpenAI, Anthropic, Google, Chinese companies, and a large number of startups—everyone is rushing toward the mission of AGI. But if we look carefully, under short-term commercial competition, the products fall into only two categories: things that attract attention, and tools for productivity.
 
@@ -22,30 +21,22 @@ The second category consists of products that help people make money. They expan
 
 When everyone’s ability improves together, the structure of competition for social resources does not fundamentally change.
 
-But we enter a death spiral.
+**We enter a death spiral.**
 
 People obsessively build these tools, and at the same time everyone obsessively uses them, pushing competition even further. Does this process really bring happiness to individuals? Is this truly what we want to create?
 
 The story of AGI begins to look like a religion. From core AI labs, to other departments, to other companies and industries, and finally to the general public—everyone is pulled into this god-building belief system.
-
-
-We are told that AI will deliver indiscriminate shocks to all industries in the coming years, and countless people already live under the shadow of potential unemployment. I find it hard to imagine the social structure if this continues for decades—or perhaps I have imagined it, but it is too cruel to describe.
+We knew that AI will deliver indiscriminate shocks to all industries in the coming years, and countless people already live under the shadow of potential unemployment. I find it hard to imagine the social structure if this continues for decades—or perhaps I have imagined it, but it is too cruel to describe.
 
 When people, driven by social influence, begin to tentatively use these tools—from conversation, to calling functions, to delegating tasks, to granting device permissions, and eventually letting their lives follow its recommendations and plans—the system evolves.
-
 From model, to agent, to an organization, and then to larger scales that continue to evolve on their own.
-
 User data generated through experimentation is used to update the model to make it more engaging. When people delegate tasks, the companies designing these agents use the execution data to optimize task performance. As capabilities increase, task complexity grows, task spaces expand, and dependency deepens.
-
 People rely on these systems to guide daily life and execute work, producing even more data for training.
-
 Human abilities themselves become data, continuously injected into the system, allowing it to acquire the same abilities. At this point, human capability becomes replaceable. As long as it makes sense commercially, people who rely on these systems will gradually be replaced.
 
 
 This story has no end. Under capitalism, it is infinitely attractive to speculators, accelerating the spiral even faster. Every startup releases a new tool and easily raises large amounts of funding, participating in and reinforcing this game.
-
 Companies that propose safeguards or ask society to slow down and think clearly directly conflict with the interests of every player in the game.
-
 The players have already reached their own equilibrium strategies.
 
 I think everyone needs to seriously consider what AGI actually means, and what its payoff is for each individual.
