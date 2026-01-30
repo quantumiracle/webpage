@@ -1,4 +1,4 @@
-# Do We Need to Build AI Decently?
+# Shall We Build AI Decently?
 
 Date: 2026.01.30 | Author: Zihan Ding
 
