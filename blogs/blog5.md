@@ -9,7 +9,7 @@ AI researchers have become crazily diligent—building new techniques, scaling d
 
 Competition becomes more intense every day. People in frontier labs work overtime under enormous pressure, hoping to achieve bigger results, gain larger rewards, and win the competition. Attention keeps concentrating. Major companies race to invest more. Talent prices are pushed to nine or even ten figures. Model capabilities rise one after another.
 
-Those who struggled for years, studying quietly and working on cold benches, finally step into the spotlight and find ways to obtain outsized returns. Some actively choose to join this game; many more are dragged into it without mercy. The flood has already started to flow, and everyone will be pulled into the depths of the vortex.
+Those researchers and engineers who struggled for years, studying quietly, working on cold benches, finally step into the spotlight and find ways to obtain outsized returns. Some actively choose to join this game; many more are dragged into it without mercy. The flood has already started to flow, and everyone will be pulled into the depths of the vortex.
 
 **What are we actually creating?  
 AGI?**
