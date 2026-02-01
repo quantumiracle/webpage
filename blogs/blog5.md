@@ -21,7 +21,7 @@ The second category consists of products for *production*, those that help peopl
 
 When everyone’s ability improves together, the structure of competition for social resources does not fundamentally change.
 
-**We enter a ``death'' spiral.**
+**We enter a ''death'' spiral.**
 
 People obsessively build these tools, and at the same time everyone obsessively uses them, pushing competition even further. Does this process really bring happiness to individuals? Is this truly what we want to create?
 
