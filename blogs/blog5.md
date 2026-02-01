@@ -39,7 +39,7 @@ Human abilities themselves become data, continuously injected into the system, a
 
 This iteration has no end in short future. Under capitalism, it is infinitely attractive to speculators, accelerating the spiral even faster. Every startup releases a new tool and easily raises large amounts of funding, participating in and reinforcing this game.
 Companies that propose safeguards or ask society to slow down and think clearly directly conflict with the interests of every player in the game.
-The players have already reached their own independent **equilibrium** strategies.
+The players have already reached their own independent *equilibrium* strategies.
 
 **Is there better equilibrium?**
 
