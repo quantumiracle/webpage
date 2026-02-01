@@ -15,9 +15,9 @@ Those researchers and engineers who struggled for years, studying quietly, worki
 
 Inside this system—OpenAI, Anthropic, Google, Chinese companies, and a large number of startups—everyone is rushing toward the mission of AGI. But if we look carefully, under short-term commercial competition, the products fall into mainly just two categories: things that attract attention, and tools for productivity.
 
-The first category consists of products for consumption: search, chat, information services. Within existing commercial structures, they serve product marketing and advertising, and profits from usage maintain this balance.
+The first category consists of products for *consumption*: search, chat, information services. Within existing commercial structures, they serve product marketing and advertising, and profits from usage maintain this balance.
 
-The second category consists of products that help people make money. They expand individual capability and increase productivity, which in turn creates more intense competition. Companies empower individuals through AI tools. People feel the boost in their abilities, and at the same time fear falling behind in this competitive environment, so they rush to use them.
+The second category consists of products for *production*, those that help people make money. They expand individual capability and increase productivity, which in turn creates more intense competition. Companies empower individuals through AI tools. People feel the boost in their abilities, and at the same time fear falling behind in this competitive environment, so they rush to use them.
 
 When everyone’s ability improves together, the structure of competition for social resources does not fundamentally change.
 
