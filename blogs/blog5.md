@@ -13,7 +13,7 @@ Those researchers and engineers who struggled for years, studying quietly, worki
 
 **What are we actually creating?  AGI?**
 
-Inside this system—OpenAI, Anthropic, Google, Chinese companies, and a large number of startups—everyone is rushing toward the mission of AGI. But if we look carefully, under short-term commercial competition, the products fall into only two categories: things that attract attention, and tools for productivity.
+Inside this system—OpenAI, Anthropic, Google, Chinese companies, and a large number of startups—everyone is rushing toward the mission of AGI. But if we look carefully, under short-term commercial competition, the products fall into mainly just two categories: things that attract attention, and tools for productivity.
 
 The first category consists of products for consumption: search, chat, information services. Within existing commercial structures, they serve product marketing and advertising, and profits from usage maintain this balance.
 
