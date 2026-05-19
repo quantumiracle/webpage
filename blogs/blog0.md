@@ -125,14 +125,14 @@ There are two ingredients:
 
 Suppose the bot sells amount $x$ of asset $a$ on the first exchange, receives asset $b$, and then trades back on the second exchange. The equilibrium condition can be written as:
 
-\[
+
 \begin{aligned}
 \frac{r_t^{b,1} - \overline{p}^{\,b,1}(1-t_f)x}{r_t^{a,1} + x}
 &=
 \frac{r_t^{b,2}+\overline{p}^{\,b,1}(1-t_f)x}
 {r_t^{a,2}-\overline{p}^{\,a,2}(1-t_f)\widehat{x}}.
 \end{aligned}
-\]
+
 
 where $r_t^{i,j}$ is the reserve of asset $i$ on exchange $j$ at time $t$, $\overline{p}^{\,i,j}$ is the predicted average price of asset $i$ on exchange $j$, and the predicted amount of asset $a$ received from the second exchange is:
 
