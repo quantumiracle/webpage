@@ -1,6 +1,6 @@
 # Side Project: Arbitrage at Crypto Market with Optimal Profit
 
-Date: 2026.05.01 | Author: Zihan Ding
+Date: 2023.05.01 | Author: Zihan Ding
 
 This project delves into capturing arbitrage opportunities in crypto trading across different markets. I found the process both fascinating and instructive, and wanted to share the journey here. It’s a hands-on exploration of financial strategy and game-theoretic equilibrium in the crypto ecosystem.
 
@@ -14,10 +14,10 @@ That gap is where arbitrage lives. If WBTC is cheaper on one exchange and more e
 
 Flash loans add one more interesting ingredient. They let a trader borrow a large amount of tokens without collateral, as long as the borrowed assets are returned inside the same atomic blockchain transaction. If any step fails, the whole transaction is reverted. This makes flash loans especially useful for arbitrage: a bot can borrow capital, trade across decentralized exchanges, repay the loan, and keep the remaining profit, all in one transaction.
 
-<figure><img src="files6/profit_history.png" alt="Cumulative extracted MEV gross profit"/>
+<figure><img src="files6/profit_history.png" alt="Cumulative extracted MEV gross profit" style="width:50%;"/>
 <figcaption>Cumulative extracted MEV gross profit. Arbitrage is not a toy problem in DeFi; it is part of a large market of automated on-chain value extraction.</figcaption></figure>
 
-<figure><img src="files6/mev.png" alt="Extracted MEV composition"/>
+<figure><img src="files6/mev.png" alt="Extracted MEV composition" style="width:50%;"/>
 <figcaption>Extracted MEV composition by strategy, token, and protocol. Arbitrage dominates many observed MEV opportunities.</figcaption></figure>
 
 This post describes an automated flash-loan arbitrage bot for crypto markets. The bot monitors token prices across decentralized exchanges, detects price discrepancies, predicts slippage under AMM rules, computes the optimal trade amount, and executes a flash-loan contract only when the predicted profit exceeds the fees.
@@ -38,7 +38,7 @@ The system has two main pieces:
 - A Solidity smart contract that executes flash-loan swaps atomically across exchanges.
 - A Python bot that monitors reserves, predicts prices, estimates fees, solves for an approximately optimal trade amount, and triggers the contract.
 
-<figure><img src="files6/arb.png" alt="Two-hop flash loan arbitrage"/>
+<figure><img src="files6/arb.png" alt="Two-hop flash loan arbitrage" style="width:50%;"/>
 <figcaption>A two-hop flash-loan arbitrage. The arbitrageur borrows from a lending contract, swaps across two exchanges, repays the loan, and keeps the remaining profit.</figcaption></figure>
 
 The bot supports arbitrary swap orders on Uniswap V2 and Sushiswap with arbitrary tokens. The price monitor also considers major DeFi exchanges such as Uniswap V2, Uniswap V3, and Sushiswap. In the experiments, I used tokens such as WBTC, LUSD, LETH, WETH, and common pairs involving assets like ETH and USDT. The implementation chooses the borrowed token, trading amount, and trading sequence automatically.
@@ -88,7 +88,7 @@ The exact fee values can vary by platform and market condition, but these consta
 
 Most constant-product AMMs maintain a relationship between pool reserves. When a trader sells amount $\delta^a$ of asset $a$ into a pool, the reserves and effective price shift. We approximate the post-trade price as:
 
-<figure><img src="files6/cpmm.png" alt="Constant product market maker"/>
+<figure><img src="files6/cpmm.png" alt="Constant product market maker" style="width:50%;"/>
 <figcaption>Constant-product market maker intuition. Selling asset A into the pool moves the reserve point along the curve and changes the effective price for asset B.</figcaption></figure>
 
 The constant-product market maker is a common AMM design used in decentralized exchanges. Instead of matching buyers and sellers through an order book, the exchange creates a liquidity pool with two tokens, such as ETH and DAI, and keeps the product of their quantities approximately constant. A trader submits an order to the pool, and the pool quotes a price from the current reserve ratio. After the trade, both reserves change, and therefore the price changes as well.
@@ -103,13 +103,13 @@ $$
 The average execution price during the transaction is approximated by:
 
 $$
-\bar{p} \approx \frac{p_t + p_{t+\delta_t}}{2}.
+\overline{p} \approx \frac{p_t + p_{t+\delta_t}}{2}.
 $$
 
 Then the amount of asset $b$ received from selling $\delta^a$ can be estimated as:
 
 $$
-\delta^b \approx (1-t_f)\bar{p}\delta^a.
+\delta^b \approx (1-t_f)\overline{p}\delta^a.
 $$
 
 This approximation lets the bot predict how much the arbitrage itself will move the market before sending the transaction. That prediction is the difference between opportunistic trading and simply donating gas to the network.
@@ -125,22 +125,25 @@ There are two ingredients:
 
 Suppose the bot sells amount $x$ of asset $a$ on the first exchange, receives asset $b$, and then trades back on the second exchange. The equilibrium condition can be written as:
 
-$$
-\frac{r_t^{b,1} - \bar{p}^{b,1}(1-t_f)x}{r_t^{a,1} + x}
-=
-\frac{r_t^{b,2}+\bar{p}^{b,1}(1-t_f)x}{r_t^{a,2}-\bar{p}^{a,2}(1-t_f)\hat{x}},
-$$
+\[
+\begin{aligned}
+\frac{r_t^{b,1} - \overline{p}^{\,b,1}(1-t_f)x}{r_t^{a,1} + x}
+&=
+\frac{r_t^{b,2}+\overline{p}^{\,b,1}(1-t_f)x}
+{r_t^{a,2}-\overline{p}^{\,a,2}(1-t_f)\hat{x}}.
+\end{aligned}
+\]
 
-where $r_t^{i,j}$ is the reserve of asset $i$ on exchange $j$ at time $t$, $\bar{p}^{i,j}$ is the predicted average price of asset $i$ on exchange $j$, and the predicted amount of asset $a$ received from the second exchange is:
+where $r_t^{i,j}$ is the reserve of asset $i$ on exchange $j$ at time $t$, $\overline{p}^{\,i,j}$ is the predicted average price of asset $i$ on exchange $j$, and the predicted amount of asset $a$ received from the second exchange is:
 
 $$
-\hat{x}=\bar{p}^{b,1}(1-t_f)x.
+\hat{x}=\overline{p}^{\,b,1}(1-t_f)x.
 $$
 
 Expanding this condition can produce a sixth-order polynomial in $x$, which generally does not have a convenient closed-form solution. The implementation therefore uses grid search with step size $0.01$ over the range $0.01$ to $10$ to approximate the optimal amount to trade on the first exchange. The predicted optimal profit is:
 
 $$
-v^* = \bar{p}^{a,2}(1-t_f)\hat{x} - x.
+v^* = \overline{p}^{\,a,2}(1-t_f)\hat{x} - x.
 $$
 
 This profit is measured in the unit of the first asset. The contract is triggered only when the predicted profit minus the monitored instant gas fee is positive.
@@ -188,7 +191,7 @@ There are still many related directions to explore. A natural extension is three
 - Swap $Y$ BTC to $Z$ ETH on exchange 2.
 - Swap $Z$ ETH to $W$ USDT and then back to $V$ BNB on exchange 3.
 
-<figure><img src="files6/swaps.jpeg" alt="Multi-hop token swap arbitrage"/>
+<figure><img src="files6/swaps.jpeg" alt="Multi-hop token swap arbitrage" style="width:50%;"/>
 <figcaption>A multi-hop arbitrage route can pass through several tokens and exchanges before returning to the original asset.</figcaption></figure>
 
 The profit would be $V-X$ after fees. The same principle applies: compute the optimal trading amount so that $V-X$ minus fees becomes approximately $0$ after the atomic transaction, eliminating the arbitrage opportunity while still preserving positive net profit for the executor. As two-token arbitrage becomes harder to profit from, multi-hop routing can reveal a larger number of opportunities.
