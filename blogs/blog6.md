@@ -1,4 +1,4 @@
-# Automated Flash Loan Arbitrage with Optimal Profit
+# Side Project: Arbitrage at Crypto Market with Optimal Profit
 
 Date: 2023.05.15 | Author: Zihan Ding
 
@@ -199,7 +199,7 @@ Another direction is time-averaged price prediction. Some exchanges, including U
 
 This work shows how flash loans, AMMs, and optimization can be combined into an automated arbitrage system. The bot finds arbitrage opportunities, computes the optimal trading amount, checks price discrepancies, gas fees, transaction fees, and slippage, then executes flash-loan transactions only when earnings are expected to remain positive.
 
-The important lesson is that profitable arbitrage is not only about finding a price difference. The bot must reason about how its own trade changes the market, estimate fees, and execute only when the full transaction remains profitable. By monitoring reserves, predicting AMM slippage, and solving for an approximately optimal trading amount, the system can turn a temporary cross-exchange price discrepancy into an atomic, automatically executed arbitrage transaction. In the WBTC/LUSD example, this was enough to produce substantial profit from a temporary gap between Uniswap and Sushiswap.
+The key takeaway is that successful arbitrage involves much more than simply spotting a price difference. The bot must understand how its own trades impact the market, accurately estimate all associated fees, and act only when the entire transaction is expected to yield a net profit. By carefully monitoring reserves, predicting slippage based on AMM mechanics, and calculating an approximately optimal trade size, the system can transform a fleeting price discrepancy between exchanges into a safe, atomic arbitrage opportunity. In the WBTC/LUSD example, this approach was sufficient to realize significant profit from a temporary divergence between Uniswap and Sushiswap. It’s important to note, however, that these results were not applied on the mainnet, and real-chain dynamics may differ.
 
 ## References
 
