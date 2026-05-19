@@ -203,5 +203,5 @@ The key takeaway is that successful arbitrage involves much more than simply spo
 
 ## References
 
-1. Project code: [https://github.com/quantumiracle/Flash-Loan-Arbitrage](https://github.com/kexinjinnn/ece473-project-submitted)
+1. Project code: [https://github.com/quantumiracle/Flash-Loan-Arbitrage](https://github.com/quantumiracle/Flash-Loan-Arbitrage)
 
