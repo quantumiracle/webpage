@@ -1,6 +1,6 @@
 # Side Project: Arbitrage at Crypto Market with Optimal Profit
 
-Date: 2023.05.15 | Author: Zihan Ding
+Date: 2026.05.01 | Author: Zihan Ding
 
 This project delves into capturing arbitrage opportunities in crypto trading across different markets. I found the process both fascinating and instructive, and wanted to share the journey here. It’s a hands-on exploration of financial strategy and game-theoretic equilibrium in the crypto ecosystem.
 
