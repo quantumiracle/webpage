@@ -127,23 +127,23 @@ Suppose the bot sells amount $x$ of asset $a$ on the first exchange, receives as
 
 
 \begin{aligned}
-\frac{r_t^{b,1} - \overline{p}^{\,b,1}(1-t_f)x}{r_t^{a,1} + x}
+\frac{r_t^{b,1} - \overline{p}^{b,1}(1-t_f)x}{r_t^{a,1} + x}
 &=
-\frac{r_t^{b,2}+\overline{p}^{\,b,1}(1-t_f)x}
-{r_t^{a,2}-\overline{p}^{\,a,2}(1-t_f)\widehat{x}}.
+\frac{r_t^{b,2}+\overline{p}^{b,1}(1-t_f)x}
+{r_t^{a,2}-\overline{p}^{a,2}(1-t_f)\widehat{x}}.
 \end{aligned}
 
 
-where $r_t^{i,j}$ is the reserve of asset $i$ on exchange $j$ at time $t$, $\overline{p}^{\,i,j}$ is the predicted average price of asset $i$ on exchange $j$, and the predicted amount of asset $a$ received from the second exchange is:
+where $r_t^{i,j}$ is the reserve of asset $i$ on exchange $j$ at time $t$, $\overline{p}^{i,j}$ is the predicted average price of asset $i$ on exchange $j$, and the predicted amount of asset $a$ received from the second exchange is:
 
 $$
-\widehat{x}=\overline{p}^{\,b,1}(1-t_f)x.
+\widehat{x}=\overline{p}^{b,1}(1-t_f)x.
 $$
 
 Expanding this condition can produce a sixth-order polynomial in $x$, which generally does not have a convenient closed-form solution. The implementation therefore uses grid search with step size $0.01$ over the range $0.01$ to $10$ to approximate the optimal amount to trade on the first exchange. The predicted optimal profit is:
 
 $$
-v^* = \overline{p}^{\,a,2}(1-t_f)\widehat{x} - x.
+v^* = \overline{p}^{a,2}(1-t_f)\widehat{x} - x.
 $$
 
 This profit is measured in the unit of the first asset. The contract is triggered only when the predicted profit minus the monitored instant gas fee is positive.
