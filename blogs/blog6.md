@@ -60,20 +60,6 @@ This shift changed the engineering design. Instead of asking one model to do eve
 
 The agent is not a magician. It is closer to a producer: it manages specialized workers, checks intermediate artifacts, remembers what has already been created, and allows the user to step in when taste or judgment is needed.
 
-## Two Applications We Designed For
-
-We designed Artalor around two potential applications that stress the framework in different ways.
-
-The first is ad video generation. A user uploads a product image. The system analyzes the product: what it is, what visual style it suggests, what colors and mood it carries, and what kind of message might fit. From that analysis, the agent writes a script, divides it into timed segments, designs storyboard frames, generates images and video clips, creates voiceover audio, selects or generates background music, and assembles the result into a final ad.
-
-The second is storytelling video generation. Instead of beginning from a product, the user begins from a story. The system treats the script as the spine of the video, then builds the visual plan around it. This is more open-ended and more fragile, because stories carry continuity, characters, tone, and pacing. But it is also where the project becomes more interesting. A story is not just a sequence of assets; it is an emotional contract with the viewer.
-
-These two applications pushed the same framework in different ways. Ads demanded clarity and conversion: what is the product, why should anyone care, and how quickly can the system make the message look professional? Storytelling demanded coherence and atmosphere: what should the viewer feel, how should one scene lead to another, and how can generated media support the plot rather than distract from it?
-
-But Artalor is not restricted to these two cases. Ads and storytelling are useful design anchors, while the framework itself is general: any application that can be expressed as script planning, asset generation, editing, and final assembly can be built on top of the same graph.
-
-The shared answer was a graph-based production pipeline.
-
 ## Why LangGraph
 
 The first version of the idea naturally leaned toward LangChain-style chains. A chain is easy to imagine: analyze the input, write the script, generate the assets, assemble the video. Step one feeds step two, step two feeds step three, and so on.
@@ -242,13 +228,15 @@ This is why caching, dirty flags, model configuration, and version management be
 
 ## Applications: Ads and Stories
 
-The ad use case is the most immediately practical. A small business, creator, or marketer may not have a production team, a studio, a voice actor, a music library, and an editor. But they may have a product photo and a rough idea. Artalor tries to turn that into a complete ad: identify the product, write the message, create the visual scenes, produce the voiceover, add music, and output a polished video.
+We designed Artalor around two potential applications that stress the framework in different ways.
 
-The storytelling use case is more personal. It asks whether an individual can direct a miniature film by describing the world and letting agents handle the production labor. This is harder than advertising because stories depend on memory and tone. The system needs to know not only what to generate, but why one scene follows another. It needs to respect character, setting, mood, and narrative rhythm.
+The first is ad video generation. A user uploads a product image. The system analyzes the product: what it is, what visual style it suggests, what colors and mood it carries, and what kind of message might fit. From that analysis, the agent writes a script, divides it into timed segments, designs storyboard frames, generates images and video clips, creates voiceover audio, selects or generates background music, and assembles the result into a final ad. This use case is immediately practical: a small business, creator, or marketer may not have a production team, a studio, a voice actor, a music library, and an editor, but they may have a product photo and a rough idea.
+
+The second is storytelling video generation. Instead of beginning from a product, the user begins from a story. The system treats the script as the spine of the video, then builds the visual plan around it. This is more open-ended and more fragile, because stories carry continuity, characters, tone, and pacing. But it is also where the project becomes more interesting. A story is not just a sequence of assets; it is an emotional contract with the viewer.
 
 These two directions also balance each other. Ads keep the system grounded: the output must be useful, clear, and complete. Storytelling keeps the system ambitious: the output must be expressive, coherent, and emotionally interesting.
 
-Together, they pushed Artalor toward a broader goal: a full-modality video generation framework, not a single-purpose demo.
+Together, they pushed Artalor toward a broader goal: a full-modality video generation framework, not a single-purpose demo. Artalor is not restricted to these two cases. Ads and storytelling are useful design anchors, while the framework itself is general: any application that can be expressed as script planning, asset generation, editing, and final assembly can be built on top of the same graph.
 
 
 ## Lessons Learned
