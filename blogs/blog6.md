@@ -40,6 +40,7 @@ The original idea was shaped around two applications:
 
 Both applications sound simple from the outside. In practice, they reveal the same problem: long video generation is not one model call. It is a small studio.
 
+
 ## From Clip Generation to Production
 
 A short generated clip can survive with ambiguity. If the camera angle is strange, the viewer may still enjoy it. If a hand looks slightly wrong, the clip is over before the brain complains too much. If the scene has no larger context, there is nothing to contradict.
@@ -59,6 +60,53 @@ to:
 This shift changed the engineering design. Instead of asking one model to do everything, Artalor separates the work into stages. It first understands the input, then builds a plan, then creates assets, then assembles them, then exposes the intermediate results for review and repair.
 
 The agent is not a magician. It is closer to a producer: it manages specialized workers, checks intermediate artifacts, remembers what has already been created, and allows the user to step in when taste or judgment is needed.
+
+
+## A Full View of the Artalor Pipeline
+
+A typical generation run looks like this:
+
+```text
+Product image / story idea
+        |
+        v
+Input understanding + product/story analysis
+        |
+        v
+Script + storyboard generation
+        |
+        v
+Scene-level assets
+        |
+        +--> key frames  --> image generation
+        +--> clips       --> video generation
+        +--> voiceover   --> TTS
+        +--> BGM         --> music generation
+        |
+        v
+Final assembly
+        |
+        v
+Preview + human edits
+        |
+        +--> regenerate selected node
+        +--> preserve unchanged assets
+```
+
+Step 01 -- The user uploads a product image or provides a story idea.
+Step 02 -- The system analyzes the product or story and extracts key visual and narrative attributes.
+Step 03 -- The agent writes a structured script with timed segments.
+Step 04 -- The graph designs the storyboard and turns it into scene-level prompts.
+Step 05 -- Image models generate key frames for each scene, often grounded by the uploaded reference image.
+Step 06 -- Video models animate the key frames into clips, using the first frame and sometimes the last frame as anchors.
+Step 07 -- TTS models synthesize voiceover audio for each timed segment.
+Step 08 -- Music models generate background music from mood keywords and the intended emotional arc.
+Step 09 -- The editing node assembles images, clips, narration, and music into the final video.
+Step 10 -- The user previews the result, edits prompts or hyperparameters, regenerates selected assets, and reruns only the necessary graph nodes.
+
+The workflow looks clean. The actual process is more alive. Some generated assets are surprisingly good. Some are strange. Some are almost right. Some fail in ways that reveal hidden assumptions in the pipeline. The engineering task is to make those failures recoverable.
+
+This is why caching, dirty flags, model configuration, and version management became core features rather than backend details. Long video generation is expensive in time and model calls. A good system should not punish the user for changing one sentence or one key-frame prompt. It should preserve what still works and reopen only the parts that need attention. Once the workflow has this many reusable assets, dependencies, and partial rerun paths, it naturally becomes more suitable for a graph-like pipeline such as LangGraph than for a simple linear chain.
 
 ## Why LangGraph
 
@@ -179,52 +227,6 @@ In a demo, these issues can be hidden by only showing the best output. In a real
 So Artalor supports fine-grained editing and regeneration. A user can modify one audio segment, regenerate a single video clip, change an image prompt, or adjust background music without destroying the entire video. The frontend also supports historical version management, so experiments do not erase previous attempts. This matters because creative work is not linear. Sometimes the third version has the best image, the fifth version has the best voiceover, and the first version had the clearest story.
 
 The agent should therefore remember history. It should allow exploration. It should make failure cheap.
-
-## What the System Actually Does
-
-A typical ad generation run looks like this:
-
-```text
-Product image / story idea
-        |
-        v
-Input understanding + product/story analysis
-        |
-        v
-Script + storyboard generation
-        |
-        v
-Scene-level assets
-        |
-        +--> key frames  --> image generation
-        +--> clips       --> video generation
-        +--> voiceover   --> TTS
-        +--> BGM         --> music generation
-        |
-        v
-Final assembly
-        |
-        v
-Preview + human edits
-        |
-        +--> regenerate selected node
-        +--> preserve unchanged assets
-```
-
-Step 01 -- The user uploads a product image.
-Step 02 -- The system analyzes the product and extracts visual attributes.
-Step 03 -- The agent writes a structured script with timed segments.
-Step 04 -- The graph designs the storyboard and turns it into scene-level prompts.
-Step 05 -- Image models generate key frames for each scene, often grounded by the uploaded reference image.
-Step 06 -- Video models animate the key frames into clips, using the first frame and sometimes the last frame as anchors.
-Step 07 -- TTS models synthesize voiceover audio for each timed segment.
-Step 08 -- Music models generate background music from mood keywords and the intended emotional arc.
-Step 09 -- The editing node assembles images, clips, narration, and music into the final video.
-Step 10 -- The user previews the result, edits prompts or hyperparameters, regenerates selected assets, and reruns only the necessary graph nodes.
-
-The workflow looks clean. The actual process is more alive. Some generated assets are surprisingly good. Some are strange. Some are almost right. Some fail in ways that reveal hidden assumptions in the pipeline. The engineering task is to make those failures recoverable.
-
-This is why caching, dirty flags, model configuration, and version management became core features rather than backend details. Long video generation is expensive in time and model calls. A good system should not punish the user for changing one sentence or one key-frame prompt. It should preserve what still works and reopen only the parts that need attention.
 
 ## Applications: Ads and Stories
 
