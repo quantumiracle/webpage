@@ -35,8 +35,10 @@ This is also why we designed the Artalor editor interface as a central part of t
 
 The original idea was shaped around two applications:
 
-- Ad videos, where the user uploads a product image and the system creates a polished consumer-facing video.
-- Storytelling, where the user starts from a narrative script or idea and the system expands it into a multi-scene audiovisual story.
+<ul>
+<li>Ad videos, where the user uploads a product image and the system creates a polished consumer-facing video.</li>
+<li>Storytelling, where the user starts from a narrative script or idea and the system expands it into a multi-scene audiovisual story.</li>
+</ul>
 
 Both applications sound simple from the outside. In practice, they reveal the same problem: long video generation is not one model call. It is a small studio.
 
