@@ -191,31 +191,45 @@ The second problem was prompt decomposition. A long video does not have one prom
 
 For example, in one real story-video run, the entire user input was only:
 
-> "a cat fight with mouse and dog"
+<blockquote style="border-left:4px solid #888; padding-left:12px; color:#555; font-style:italic;">
+"a cat fight with mouse and dog"
+</blockquote>
 
 From that tiny seed, the storyboard node expanded the idea into scene-level production notes:
 
-> "The cat prowls the backyard, spots the mouse nibbling cheese. The cat stealthily moves from bush to bush, eyes locked on the mouse. The mouse enjoys its cheese until the last second, when it senses the cat's presence and freezes."
+<blockquote style="border-left:4px solid #888; padding-left:12px; color:#555; font-style:italic;">
+"The cat prowls the backyard, spots the mouse nibbling cheese. The cat stealthily moves from bush to bush, eyes locked on the mouse. The mouse enjoys its cheese until the last second, when it senses the cat's presence and freezes."
+</blockquote>
 
 Then the image node used a first-frame prompt to establish the scene:
 
-> "A vibrant garden with lush green grass and colorful flowers. The cat, a sleek orange tabby, crouches low behind a bush, its eyes wide with focus and determination. The mouse, a small brown creature, nibbles on a piece of yellow cheese..."
+<blockquote style="border-left:4px solid #888; padding-left:12px; color:#555; font-style:italic;">
+"A vibrant garden with lush green grass and colorful flowers. The cat, a sleek orange tabby, crouches low behind a bush, its eyes wide with focus and determination. The mouse, a small brown creature, nibbles on a piece of yellow cheese..."
+</blockquote>
 
 The last-frame prompt described where the clip should land:
 
-> "The mouse looks up suddenly, cheese in its tiny paws, as the cat prepares to pounce from behind the bush. The setting remains vivid, with a slight breeze causing leaves to sway gently."
+<blockquote style="border-left:4px solid #888; padding-left:12px; color:#555; font-style:italic;">
+"The mouse looks up suddenly, cheese in its tiny paws, as the cat prepares to pounce from behind the bush. The setting remains vivid, with a slight breeze causing leaves to sway gently."
+</blockquote>
 
 The video prompt focused less on static composition and more on temporal motion:
 
-> "The cat stealthily moves from bush to bush, eyes locked on the mouse. The mouse enjoys its cheese until the last second, when it senses the cat's presence and freezes."
+<blockquote style="border-left:4px solid #888; padding-left:12px; color:#555; font-style:italic;">
+"The cat stealthily moves from bush to bush, eyes locked on the mouse. The mouse enjoys its cheese until the last second, when it senses the cat's presence and freezes."
+</blockquote>
 
 The voiceover prompt carried a different kind of intent, with language, style, pacing, and narration text:
 
-> "Voice style: playful, reflective, adventurous. Pacing: medium. In a vibrant backyard where a cunning cat prowls, a tale unfolds of unexpected alliances..."
+<blockquote style="border-left:4px solid #888; padding-left:12px; color:#555; font-style:italic;">
+"Voice style: playful, reflective, adventurous. Pacing: medium. In a vibrant backyard where a cunning cat prowls, a tale unfolds of unexpected alliances..."
+</blockquote>
 
 The BGM prompt follows the same pattern, but from mood and style rather than visual action. In the framework, the BGM node composes prompts in this form:
 
-> "Background music for an advertisement. Mood: energetic. Style: modern, cinematic, clean mix."
+<blockquote style="border-left:4px solid #888; padding-left:12px; color:#555; font-style:italic;">
+"Background music for an advertisement. Mood: energetic. Style: modern, cinematic, clean mix."
+</blockquote>
 
 This is why BGM cannot be treated as an afterthought. Its prompt should not merely say "add music"; it should describe the mood, energy, and emotional arc that the final edit needs. In the system design, script, storyboard, key-frame, video, voiceover, and BGM prompts all become editable production materials.
 
