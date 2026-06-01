@@ -192,7 +192,7 @@ The second problem was prompt decomposition. A long video does not have one prom
 For example, in one real story-video run, the entire user input was only:
 
 <blockquote style="border-left:4px solid #888; padding-left:12px; color:#555; font-style:italic;">
-"a cat fight with mouse and dog"
+"a cat plays around with mouse and dog"
 </blockquote>
 
 From that tiny seed, the storyboard node expanded the idea into scene-level production notes:
