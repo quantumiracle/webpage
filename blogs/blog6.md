@@ -35,7 +35,7 @@ This is also why we designed the Artalor editor interface as a central part of t
 
 The original idea was shaped around two applications:
 
-<ul>
+<ul style="list-style-type: disc; padding-left: 24px;">
 <li>Ad videos, where the user uploads a product image and the system creates a polished consumer-facing video.</li>
 <li>Storytelling, where the user starts from a narrative script or idea and the system expands it into a multi-scene audiovisual story.</li>
 </ul>
