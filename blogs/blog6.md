@@ -94,14 +94,23 @@ Preview + human edits
 ```
 
 Step 01 -- The user uploads a product image or provides a story idea.
+
 Step 02 -- The system analyzes the product or story and extracts key visual and narrative attributes.
+
 Step 03 -- The agent writes a structured script with timed segments.
+
 Step 04 -- The graph designs the storyboard and turns it into scene-level prompts.
+
 Step 05 -- Image models generate key frames for each scene, often grounded by the uploaded reference image.
+
 Step 06 -- Video models animate the key frames into clips, using the first frame and sometimes the last frame as anchors.
+
 Step 07 -- TTS models synthesize voiceover audio for each timed segment.
+
 Step 08 -- Music models generate background music from mood keywords and the intended emotional arc.
+
 Step 09 -- The editing node assembles images, clips, narration, and music into the final video.
+
 Step 10 -- The user previews the result, edits prompts or hyperparameters, regenerates selected assets, and reruns only the necessary graph nodes.
 
 The workflow looks clean. The actual process is more alive. Some generated assets are surprisingly good. Some are strange. Some are almost right. Some fail in ways that reveal hidden assumptions in the pipeline. The engineering task is to make those failures recoverable.
