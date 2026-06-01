@@ -10,12 +10,12 @@ Artalor is my attempt to build that missing layer. It is a full-stack, multi-mod
 
 <figure style="text-align:center;">
 <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;">
-<img src="files6/artalor_demo_1.gif" alt="Artalor generated video preview 1" style="width:100%;"/>
-<img src="files6/artalor_demo_2.gif" alt="Artalor generated video preview 2" style="width:100%;"/>
-<img src="files6/artalor_demo_3.gif" alt="Artalor generated video preview 3" style="width:100%;"/>
-<img src="files6/artalor_demo_4.gif" alt="Artalor generated video preview 4" style="width:100%;"/>
+<video src="files6/more/artalor_demo_1.mp4" controls muted loop playsinline style="width:100%;"></video>
+<video src="files6/more/artalor_demo_2.mp4" controls muted loop playsinline style="width:100%;"></video>
+<video src="files6/more/artalor_demo_3.mp4" controls muted loop playsinline style="width:100%;"></video>
+<video src="files6/more/artalor_demo_4.mp4" controls muted loop playsinline style="width:100%;"></video>
 </div>
-<figcaption>Animated previews from Artalor-generated videos. Each final video is assembled from script, key frames, video clips, voiceover, and background music. See the <a href="https://ads.artale.site/">project page</a> for full examples with audio.</figcaption>
+<figcaption>Video previews from Artalor-generated outputs. Each final video is assembled from script, key frames, video clips, voiceover, and background music. See the <a href="https://ads.artale.site/">project page</a> for full examples with audio.</figcaption>
 </figure>
 
 ## Introduction
