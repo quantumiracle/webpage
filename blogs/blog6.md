@@ -86,15 +86,15 @@ This is why Artalor moved from a simple chain mindset to LangGraph. LangChain-st
 
 The workflow is better represented as a stateful graph with nodes, dependencies, checkpoints, and dirty flags. Each node owns a part of the production:
 
-- `image_understanding` analyzes the uploaded product or visual input.
-- `product_analysis` extracts style, colors, product features, and mood.
-- `storyboard_design` plans the visual sequence.
-- `segmented_monologue` writes the timed narration.
-- `segmented_tts` generates voiceover audio for each segment.
-- `image_generation` creates visual frames or scene images.
-- `video_generation` turns images and prompts into motion.
-- `bgm` generates or selects background music.
-- `edit` assembles the final video from all produced assets.
+- `image_understanding` -- analyzes the uploaded product or visual input.
+- `product_analysis` -- extracts style, colors, product features, and mood.
+- `storyboard_design` -- plans the visual sequence.
+- `segmented_monologue` -- writes the timed narration.
+- `segmented_tts` -- generates voiceover audio for each segment.
+- `image_generation` -- creates visual frames or scene images.
+- `video_generation` -- turns images and prompts into motion.
+- `bgm` -- generates or selects background music.
+- `edit` -- assembles the final video from all produced assets.
 
 The graph structure makes the system feel less like a fragile script and more like a production board. If a node changes, downstream nodes can be rerun. If a node is unchanged, cached results can remain. If the user regenerates a single asset, the rest of the production does not need to be thrown away. This was especially important because the system has to preserve references to the user's uploaded image, whether it is a key product image for an ad or a key character image for a story. That reference has to flow through the graph as shared production memory, not disappear after the first prompt.
 
@@ -194,16 +194,6 @@ So Artalor supports fine-grained editing and regeneration. A user can modify one
 
 The agent should therefore remember history. It should allow exploration. It should make failure cheap.
 
-## Applications: Ads and Stories
-
-The ad use case is the most immediately practical. A small business, creator, or marketer may not have a production team, a studio, a voice actor, a music library, and an editor. But they may have a product photo and a rough idea. Artalor tries to turn that into a complete ad: identify the product, write the message, create the visual scenes, produce the voiceover, add music, and output a polished video.
-
-The storytelling use case is more personal. It asks whether an individual can direct a miniature film by describing the world and letting agents handle the production labor. This is harder than advertising because stories depend on memory and tone. The system needs to know not only what to generate, but why one scene follows another. It needs to respect character, setting, mood, and narrative rhythm.
-
-These two directions also balance each other. Ads keep the system grounded: the output must be useful, clear, and complete. Storytelling keeps the system ambitious: the output must be expressive, coherent, and emotionally interesting.
-
-Together, they pushed Artalor toward a broader goal: a full-modality video generation framework, not a single-purpose demo.
-
 ## What the System Actually Does
 
 A typical ad generation run looks like this:
@@ -235,20 +225,31 @@ Preview + human edits
         +--> preserve unchanged assets
 ```
 
-1. The user uploads a product image.
-2. The system analyzes the product and extracts visual attributes.
-3. The agent writes a structured script with timed segments.
-4. The graph designs the storyboard and turns it into scene-level prompts.
-5. Image models generate key frames for each scene, often grounded by the uploaded reference image.
-6. Video models animate the key frames into clips, using the first frame and sometimes the last frame as anchors.
-7. TTS models synthesize voiceover audio for each timed segment.
-8. Music models generate background music from mood keywords and the intended emotional arc.
-9. The editing node assembles images, clips, narration, and music into the final video.
-10. The user previews the result, edits prompts or hyperparameters, regenerates selected assets, and reruns only the necessary graph nodes.
+Step 01 -- The user uploads a product image.
+Step 02 -- The system analyzes the product and extracts visual attributes.
+Step 03 -- The agent writes a structured script with timed segments.
+Step 04 -- The graph designs the storyboard and turns it into scene-level prompts.
+Step 05 -- Image models generate key frames for each scene, often grounded by the uploaded reference image.
+Step 06 -- Video models animate the key frames into clips, using the first frame and sometimes the last frame as anchors.
+Step 07 -- TTS models synthesize voiceover audio for each timed segment.
+Step 08 -- Music models generate background music from mood keywords and the intended emotional arc.
+Step 09 -- The editing node assembles images, clips, narration, and music into the final video.
+Step 10 -- The user previews the result, edits prompts or hyperparameters, regenerates selected assets, and reruns only the necessary graph nodes.
 
-That list looks clean. The actual process is more alive. Some generated assets are surprisingly good. Some are strange. Some are almost right. Some fail in ways that reveal hidden assumptions in the pipeline. The engineering task is to make those failures recoverable.
+The workflow looks clean. The actual process is more alive. Some generated assets are surprisingly good. Some are strange. Some are almost right. Some fail in ways that reveal hidden assumptions in the pipeline. The engineering task is to make those failures recoverable.
 
 This is why caching, dirty flags, model configuration, and version management became core features rather than backend details. Long video generation is expensive in time and model calls. A good system should not punish the user for changing one sentence or one key-frame prompt. It should preserve what still works and reopen only the parts that need attention.
+
+## Applications: Ads and Stories
+
+The ad use case is the most immediately practical. A small business, creator, or marketer may not have a production team, a studio, a voice actor, a music library, and an editor. But they may have a product photo and a rough idea. Artalor tries to turn that into a complete ad: identify the product, write the message, create the visual scenes, produce the voiceover, add music, and output a polished video.
+
+The storytelling use case is more personal. It asks whether an individual can direct a miniature film by describing the world and letting agents handle the production labor. This is harder than advertising because stories depend on memory and tone. The system needs to know not only what to generate, but why one scene follows another. It needs to respect character, setting, mood, and narrative rhythm.
+
+These two directions also balance each other. Ads keep the system grounded: the output must be useful, clear, and complete. Storytelling keeps the system ambitious: the output must be expressive, coherent, and emotionally interesting.
+
+Together, they pushed Artalor toward a broader goal: a full-modality video generation framework, not a single-purpose demo.
+
 
 ## Lessons Learned
 
