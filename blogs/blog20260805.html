@@ -672,7 +672,7 @@
 \end{tikzpicture}
 </script>
 </div>
-<figcaption>Shared abstraction and three instances of higher-order functional modeling. The top part shows the common form: evidence $D$ is mapped by a higher-order operator $\mathcal F_\theta$ to a first-order object $f_D$. The bottom part instantiates this object as a world model $M_D$, a functional update $\delta f$, or a self-model $\hat f_c$. In the world-model branch, the inferred model $M_D$ is further reused as a simulator for policy optimization via rollouts (second-order usage); the optimized policy $\pi_{\phi^*}$ then collects fresh evidence in the real environment to update the operator parameters $\theta$, closing a self-improving outer loop.</figcaption>
+<figcaption>Shared abstraction and three instances of higher-order functional modeling. The top part shows the common form: evidence $D$ is mapped by a higher-order operator to a first-order function $f_D$. The bottom part instantiates this object as a world model $M_D$, a functional update $\delta f$, or a self-model $\hat f_c$. In the world-model branch, the inferred model $M_D$ is further reused as a simulator for policy optimization via rollouts (second-order usage); the optimized policy $\pi_{\phi^*}$ then collects fresh evidence in the real environment to update the operator parameters $\theta$, closing a self-improving outer loop.</figcaption>
 </figure>
 <h3>Example I: world-model operator.</h3>
 <p>Let $\mathcal S$ be the state space and $\mathcal A$ the action or control space. A first-order world model is a dynamics model</p>
