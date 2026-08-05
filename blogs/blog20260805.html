@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Step for AGI - High Order System</title>
+    <script>
+        window.MathJax = {
+            loader: { load: ['[tex]/ams', '[tex]/mathtools', '[tex]/noerrors', '[tex]/noundefined'] },
+            tex: {
+                packages: { '[+]': ['ams', 'mathtools', 'noerrors', 'noundefined'] },
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                tags: 'ams'
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="stylesheet" href="https://tikzjax.com/v1/fonts.css">
+    <script src="https://tikzjax.com/v1/tikzjax.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.65;
+            color: #1f2933;
+            background: #f9f9f9;
+        }
+        #blog-content {
+            width: min(900px, calc(100% - 40px));
+            margin: 24px auto 64px;
+            padding: 32px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+        header {
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+        }
+        h1 {
+            margin: 0 0 8px;
+            line-height: 1.2;
+        }
+        h2 {
+            margin-top: 36px;
+            line-height: 1.3;
+        }
+        h3 {
+            margin-top: 24px;
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+        p {
+            text-align: justify;
+            margin: 0 0 14px;
+        }
+        .meta {
+            color: #667085;
+            margin: 0;
+        }
+        .toc {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 24px 0 32px;
+        }
+        .toc h2 {
+            font-size: 1.1rem;
+            margin: 0 0 8px;
+        }
+        .toc ol {
+            margin: 0;
+            padding-left: 22px;
+        }
+        .toc a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        .math-block {
+            overflow-x: auto;
+            margin: 16px 0;
+            padding: 4px 0;
+        }
+        mjx-container[jax="SVG"] {
+            overflow-x: auto;
+            overflow-y: hidden;
+            max-width: 100%;
+        }
+        .theorem-block, .proof-block {
+            border-left: 4px solid #94a3b8;
+            background: #f8fafc;
+            padding: 14px 18px;
+            margin: 18px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .proof-block {
+            border-left-color: #cbd5e1;
+            background: #fff;
+        }
+        .block-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        figure.tex-figure {
+            margin: 28px 0;
+            padding: 18px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #fcfcfd;
+            text-align: center;
+        }
+
+        .tikz-stage {
+            overflow-x: auto;
+            display: flex;
+            justify-content: center;
+            min-height: 80px;
+        }
+        .tikz-stage svg {
+            max-width: 100%;
+            height: auto;
+        }
+        figcaption {
+            margin-top: 12px;
+            color: #555;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+        details.collapsible {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin: 18px 0;
+            background: #fcfcfd;
+        }
+        details.collapsible > summary {
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.15rem;
+            line-height: 1.35;
+            padding: 12px 16px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        details.collapsible > summary::-webkit-details-marker {
+            display: none;
+        }
+        details.collapsible > summary::before {
+            content: "\25B8";
+            color: #667085;
+            font-size: 0.9em;
+        }
+        details.collapsible[open] > summary::before {
+            content: "\25BE";
+        }
+        details.collapsible > summary:hover {
+            color: #2563eb;
+        }
+        .collapsible-body {
+            padding: 0 16px 8px;
+        }
+        .citation-text {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+        pre {
+            white-space: pre-wrap;
+            overflow-x: auto;
+            background: #111827;
+            color: #f9fafb;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+        @media (max-width: 640px) {
+            #blog-content {
+                width: 100%;
+                margin: 0;
+                border-radius: 0;
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main id="blog-content">
+        <header>
+            <h1>Next Step for AGI - High Order System</h1>
+            <p class="meta">Zihan Ding · August 5 2026</p>
+        </header>
+        <nav class="toc" aria-label="Table of contents"><h2>Contents</h2><ol><li><a href="#background">Background</a></li>
+<li><a href="#core-idea">Core Idea</a></li>
+<li><a href="#current-system-and-higher-order-functional-modeling">Current System and Higher-Order Functional Modeling</a></li>
+<li><a href="#instantiation">Instantiation</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#appendix">Appendix</a></li></ol></nav>
+        <article>
+<h2 id="background">Background</h2>
+<p>Our recent great progress with large language models (LLMs) and other multimodal foundation models—now capable of superhuman performance in daily conversation as well as mathematical and coding reasoning—has hit a wall: the major body of the model weights is spent remembering the gigantic amount of training data rather than the general principles of learning. As a result, these systems fail to achieve general intelligence, especially the adaptivity to new tasks and environments. This wall becomes increasingly visible as realistic tasks grow more long-tailed and long-horizon, which makes the specific training data scarce and expensive to collect (so data scaling law breaks). Yet the human brain, which is never exposed to data on such a scale, still attains a comparable level of intelligence—a central mystery of intelligence that remains unresolved.</p>
+<p>We argue that the missing piece is human-level sample and parameter efficiency, attained by leveraging higher-order principles of learning. Current systems directly learn the mapping $x\mapsto y$, for example  in next-token prediction over text sequences, QA pairs and reasoning trajectories or visual reasoning in future frame generation; in this first-order manner, all task-relevant knowledge must be memorized inside the parameters, and the model never explicitly acquires meta-level, learning-to-learn capabilities. Such higher-order capability could substantially improve sample efficiency by generalizing knowledge acquisition and decomposing the problem space, instead of memorizing everything beforehand. The core assumption of this article is therefore that the higher-order system is the key to break the limit of training-data scarcity, improve sample efficiency by enabling decomposition of the problem space and achieve general intelligence. </p>
+<p>Under this view, three seemingly distinct instances—the <strong>world model</strong>, the <strong>self-evolving</strong> agent, and <strong>self-modeling</strong>—are unified as special cases of a single higher-order functional formulation.</p>
+<h2 id="core-idea">Core Idea</h2>
+<div class="theorem-block"><div class="block-title">Definition (Higher-order functional system)</div><p>Let $\mathcal X$ be an input space, $\mathcal Y$ an output space, and $\mathcal H\subseteq\{f:\mathcal X\to\mathcal Y\}$ a hypothesis space of first-oreneral intelligenceder predictors. Let $\mathcal D_m=(\mathcal X\times\mathcal Y)^m$ be the space of task evidence. A higher-order functional system is an operator</p>
+<div class="math-block">\[
+    \mathcal F_\theta:\mathcal D_m\to\mathcal H.
+\]</div>
+<p>Given evidence $D\in\mathcal D_m$ and a query $x\in\mathcal X$, its prediction is</p>
+<div class="math-block">\[
+    \hat y = [\mathcal F_\theta(D)](x).
+\]</div></div>
+<figure class="tex-figure">
+<div class="tikz-stage">
+<script type="text/tikz">
+\usetikzlibrary{arrows.meta,positioning,fit,calc,backgrounds}
+\begin{tikzpicture}[
+    node distance=1.2cm and 1.5cm,
+    box/.style={
+        draw,
+        rounded corners,
+        align=center,
+        inner sep=6pt,
+        minimum height=0.8cm
+    },
+    arrow/.style={-{Latex[length=2mm]}, thick}
+]
+
+% First-order row
+\node[box] (fo-label) {\textbf{First-order}};
+\node[box, right=of fo-label] (fo-x) {$x$};
+\node[box, right=of fo-x] (fo-y) {$\hat y=f_\theta(x)$};
+
+\draw[arrow] (fo-x) -- node[above] {$f_\theta$} (fo-y);
+
+% Higher-order row
+\node[box, below=1.1cm of fo-label] (ho-label) {\textbf{Higher-order}};
+\node[box, right=of ho-label] (ho-d) {$D=\Bigl\{(x_i\text{,}\,y_i)\Bigr\}_{i=1}^m$};
+\node[box, right=of ho-d] (ho-f) {$f_D$};
+\node[box, right=of ho-f] (ho-y) {$\hat y'=f_D(x')$};
+
+\draw[arrow] (ho-d) -- node[above] {$\mathcal F_\theta$} (ho-f);
+\draw[arrow] (ho-f) -- node[above] {$\operatorname{Eval}(\cdot\text{,}\,x')$} (ho-y);
+
+\end{tikzpicture}
+</script>
+</div>
+<figcaption>First-order systems directly model $x\mapsto y$. Higher-order systems model $D\mapsto f_D$ and then use $f_D$ to answer a new query.</figcaption>
+</figure>
+<h2 id="current-system-and-higher-order-functional-modeling">Current System and Higher-Order Functional Modeling</h2>
+<figure class="tex-figure">
+<div class="tikz-stage">
+<script type="text/tikz">
+\usetikzlibrary{arrows.meta,positioning,fit,calc,backgrounds}
+\begin{tikzpicture}[
+    node distance=0.95cm and 1.0cm,
+    box/.style={
+        draw,
+        rounded corners,
+        align=center,
+        inner sep=6pt,
+        minimum height=0.8cm
+    },
+    arrow/.style={-{Latex[length=2mm]}, thick}
+]
+
+\node[box] (input) {$D_\tau^{\mathrm{tr}}\text{,}\,f_0$};
+\node[box, right=of input] (update) {$\delta f_\tau$};
+\node[box, right=of update] (adapt) {$f_\tau^{\mathrm{adapt}}=f_0+\delta f_\tau$};
+\node[box, right=of adapt] (loss) {$\mathcal J_\tau(\theta)$};
+\node[box, right=of loss] (theta) {update $\theta$};
+
+\draw[arrow] (input) -- node[above] {$\mathcal U_\theta$} (update);
+\draw[arrow] (update) -- node[above] {$+\,f_0$} (adapt);
+\draw[arrow] (adapt) -- node[above] {$\mathcal L_{D_\tau^{\mathrm{val}}}$} (loss);
+\draw[arrow] (loss) -- node[above] {$\nabla_\theta$} (theta);
+
+% Bottom labels
+\node[below=0.35cm of input, align=center] {\small adaptation\\[-0.1em] evidence};
+\node[below=0.35cm of update, align=center] {\small functional\\[-0.1em] update};
+\node[below=0.35cm of adapt, align=center] {\small adapted\\[-0.1em] predictor};
+\node[below=0.35cm of loss, align=center] {\small meta-loss};
+\node[below=0.35cm of theta, align=center] {\small learn the\\[-0.1em] updater};
+
+\end{tikzpicture}
+</script>
+</div>
+<figcaption>Example: Self-evolving agent as higher-order learning. Here $\tau\sim\rho$ denotes a task sampled from a task distribution $\rho$, so all quantities subscripted by $\tau$ (evidence $D_\tau$, update $\delta f_\tau$, adapted predictor $f_\tau^{\mathrm{adapt}}$, meta-loss $\mathcal J_\tau$) are task-specific. The learned operator $\mathcal U_\theta$ outputs a functional update $\delta f_\tau$, while the meta-gradient $\nabla_\theta \mathcal J$ updates the updater itself.</figcaption>
+</figure>
+<h3>First-order systems.</h3>
+<p>Let $\mathcal X$ be an input space and $\mathcal Y$ be an output space. A standard predictive system is a first-order function</p>
+<div class="math-block">\begin{equation}
+    f:\mathcal X \rightarrow \mathcal Y,
+\end{equation}</div>
+<p>which maps an input, context, or problem $x\in\mathcal X$ to an output, extension, or answer $y\in\mathcal Y$. For example, in language modeling, $x$ may denote the context and $y$ the continuation; in problem solving, $x$ may denote the problem statement and $y$ the answer.</p>
+<p>A first-order model directly learns the relation</p>
+<div class="math-block">\begin{equation}
+    x \mapsto y.
+\end{equation}</div>
+<p>Therefore, all task-relevant knowledge must be represented implicitly inside the parameters of $f$. In this sense, a first-order system attempts to encode the solution map itself.</p>
+<h3>Higher-order systems.</h3>
+<p>A higher-order system does not only model the direct relation $x\mapsto y$. Instead, it models how an appropriate first-order function should be inferred from evidence.</p>
+<p>Let</p>
+<div class="math-block">\begin{equation}
+    \mathcal H \subseteq \{f:\mathcal X\rightarrow \mathcal Y\}
+\end{equation}</div>
+<p>be a hypothesis space of first-order systems. Let</p>
+<div class="math-block">\begin{equation}
+    D = \{(x_i,y_i)\}_{i=1}^m \in \mathcal D_m,
+    \qquad
+    \mathcal D_m := (\mathcal X\times\mathcal Y)^m,
+\end{equation}</div>
+<p>denote a set of task-specific observations or evidence.</p>
+<p>A higher-order system is an operator</p>
+<div class="math-block">\begin{equation}
+    \mathcal F_\theta:\mathcal D_m \rightarrow \mathcal H,
+\end{equation}</div>
+<p>which maps evidence $D$ to a task-adapted first-order function</p>
+<div class="math-block">\begin{equation}
+    f_D = \mathcal F_\theta(D).
+\end{equation}</div>
+<p>Given a new query $x'\in\mathcal X$, prediction is performed by the composition</p>
+<div class="math-block">\begin{equation}
+    \hat y&#x27;
+    =
+    [\mathcal F_\theta(D)](x&#x27;)
+    =
+    f_D(x&#x27;).
+\end{equation}</div>
+<p>Thus, the higher-order system models</p>
+<div class="math-block">\begin{equation}
+    D \mapsto f_D,
+    \qquad
+    f_D:x&#x27;\mapsto y&#x27;,
+\end{equation}</div>
+<p>rather than only</p>
+<div class="math-block">\begin{equation}
+    x&#x27;\mapsto y&#x27;.
+\end{equation}</div>
+<p>Equivalently, $\mathcal F_\theta$ is a learned functional or operator whose output is itself a function. A first-order system stores a direct solution map, whereas a higher-order system stores a rule for constructing solution maps.</p>
+<details class="collapsible">
+<summary>Regularized formulation.</summary>
+<div class="collapsible-body">
+<p>A classical way to define such an operator is through regularized empirical risk minimization:</p>
+<div class="math-block">\begin{equation}
+    \mathcal F(D)
+    =
+    \operatorname*{argmin}_{f\in\mathcal H}
+    \left[
+        \sum_{(x_i,y_i)\in D}
+        \ell(f(x_i),y_i)
+        +
+        \Omega(f)
+    \right],
+    
+\end{equation}</div>
+<p>where $\ell:\mathcal Y\times\mathcal Y\to\mathbb R_+$ is a loss function and $\Omega:\mathcal H\to\mathbb R_+$ is a regularizer. In this view, the higher-order system is the map</p>
+<div class="math-block">\begin{equation}
+    D
+    \mapsto
+    \operatorname*{argmin}_{f\in\mathcal H}
+    \left[
+        \sum_{(x_i,y_i)\in D}
+        \ell(f(x_i),y_i)
+        +
+        \Omega(f)
+    \right].
+\end{equation}</div>
+<p>The neural higher-order system $\mathcal F_\theta$ can be interpreted as a learned approximation to this inference operator.</p>
+</div>
+</details>
+<details class="collapsible">
+<summary>Bayesian formulation.</summary>
+<div class="collapsible-body">
+<p>Alternatively, suppose there is a prior distribution $p(f)$ over functions $f\in\mathcal H$ and a likelihood $p(D\mid f)$. Then the posterior over functions is</p>
+<div class="math-block">\begin{equation}
+    p(f\mid D)
+    =
+    \frac{p(D\mid f)p(f)}{p(D)}.
+\end{equation}</div>
+<p>In this case, the higher-order system may output either a posterior distribution</p>
+<div class="math-block">\begin{equation}
+    \mathcal F(D)=p(f\mid D),
+\end{equation}</div>
+<p>or a point estimate such as the maximum a posteriori function</p>
+<div class="math-block">\begin{equation}
+    \mathcal F(D)
+    =
+    \operatorname*{argmax}_{f\in\mathcal H}
+    p(f\mid D).
+\end{equation}</div>
+<p>Thus, high-order modeling can be viewed as amortized inference over first-order functions.</p>
+</div>
+</details>
+<details class="collapsible">
+<summary>Latent-task formulation.</summary>
+<div class="collapsible-body">
+<p>Assume tasks are sampled from a task distribution</p>
+<div class="math-block">\begin{equation}
+    \tau\sim\rho.
+\end{equation}</div>
+<p>Each task $\tau$ has an unknown target function</p>
+<div class="math-block">\begin{equation}
+    f^\star_\tau:\mathcal X\rightarrow\mathcal Y.
+\end{equation}</div>
+<p>For task $\tau$, data are sampled from a task-specific distribution $P_\tau$:</p>
+<div class="math-block">\begin{equation}
+    (x,y)\sim P_\tau,
+    \qquad
+    y = f^\star_\tau(x) + \epsilon,
+\end{equation}</div>
+<p>where $\epsilon$ denotes observation noise.</p>
+<p>A first-order model learns a single function</p>
+<div class="math-block">\begin{equation}
+    f_\theta:\mathcal X\rightarrow\mathcal Y
+\end{equation}</div>
+<p>by minimizing the average risk</p>
+<div class="math-block">\begin{equation}
+    \min_\theta
+    \;
+    \mathbb E_{\tau\sim\rho}
+    \mathbb E_{(x,y)\sim P_\tau}
+    \left[
+        \ell(f_\theta(x),y)
+    \right].
+    
+\end{equation}</div>
+<p>This objective forces one global model $f_\theta$ to solve all tasks.</p>
+<p>In contrast, a higher-order model learns an operator</p>
+<div class="math-block">\begin{equation}
+    \mathcal F_\theta:\mathcal D_m\rightarrow\mathcal H
+\end{equation}</div>
+<p>by minimizing the meta-risk</p>
+<div class="math-block">\begin{equation}
+    \min_\theta
+    \;
+    \mathbb E_{\tau\sim\rho}
+    \mathbb E_{D_\tau\sim P_\tau^m}
+    \mathbb E_{(x&#x27;,y&#x27;)\sim P_\tau}
+    \left[
+        \ell\left(
+            [\mathcal F_\theta(D_\tau)](x&#x27;),
+            y&#x27;
+        \right)
+    \right].
+    
+\end{equation}</div>
+<p>The learned object is therefore not merely a predictor, but a task-conditioned predictor constructor.</p>
+</div>
+</details>
+<details class="collapsible">
+<summary>Bayes-optimal high-order predictor.</summary>
+<div class="collapsible-body">
+<p>The optimal higher-order system admits a clean characterization under squared loss.</p>
+<div class="theorem-block"><div class="block-title">Proposition (Bayes-optimal higher-order predictor)</div><p>Let the loss be squared error:</p>
+<div class="math-block">\begin{equation}
+    \ell(\hat y,y)=\|\hat y-y\|_2^2.
+\end{equation}</div>
+<p>Suppose that, conditioned on evidence $D$, the target function $f^\star$ is distributed according to $p(f^\star\mid D)$. Then the Bayes-optimal higher-order predictor satisfies</p>
+<div class="math-block">\begin{equation}
+    [\mathcal F^\star(D)](x)
+    =
+    \mathbb E[f^\star(x)\mid D].
+\end{equation}</div></div>
+<div class="proof-block"><div class="block-title">Proof</div><p>For fixed $D$ and $x$, the Bayes-optimal prediction is</p>
+<div class="math-block">\begin{equation}
+    g^\star(x)
+    =
+    \operatorname*{argmin}_{z\in\mathcal Y}
+    \mathbb E
+    \left[
+        \|z-f^\star(x)\|_2^2
+        \mid D
+    \right].
+\end{equation}</div>
+<p>Expanding the square,</p>
+<div class="math-block">\begin{align}
+    \mathbb E
+    \left[
+        \|z-f^\star(x)\|_2^2
+        \mid D
+    \right]
+    &amp;=
+    \mathbb E
+    \left[
+        \|z\|_2^2
+        -2\langle z,f^\star(x)\rangle
+        +\|f^\star(x)\|_2^2
+        \mid D
+    \right] \\
+    &amp;=
+    \|z\|_2^2
+    -2\left\langle z,\mathbb E[f^\star(x)\mid D]\right\rangle
+    +
+    \mathbb E
+    \left[
+        \|f^\star(x)\|_2^2
+        \mid D
+    \right].
+\end{align}</div>
+<p>Differentiating with respect to $z$ and setting the derivative to zero gives</p>
+<div class="math-block">\begin{equation}
+    2z - 2\mathbb E[f^\star(x)\mid D]=0.
+\end{equation}</div>
+<p>Therefore,</p>
+<div class="math-block">\begin{equation}
+    z = \mathbb E[f^\star(x)\mid D].
+\end{equation}</div>
+<p>Hence</p>
+<div class="math-block">\begin{equation}
+    [\mathcal F^\star(D)](x)
+    =
+    \mathbb E[f^\star(x)\mid D].
+\end{equation}</div></div>
+<p>This proposition shows that the optimal high-order system is an inference operator from evidence $D$ to the posterior mean first-order function.</p>
+</div>
+</details>
+<h3>First-order systems as a special case.</h3>
+<p>A first-order model is a degenerate higher-order system that ignores the evidence $D$:</p>
+<div class="math-block">\begin{equation}
+    \mathcal F_\theta(D)=f_\theta,
+    \qquad
+    \forall D\in\mathcal D_m.
+\end{equation}</div>
+<p>Then prediction becomes</p>
+<div class="math-block">\begin{equation}
+    [\mathcal F_\theta(D)](x)=f_\theta(x).
+\end{equation}</div>
+<p>Therefore, higher-order modeling strictly generalizes first-order modeling. It can recover a fixed first-order predictor when evidence is uninformative, but it can also produce task-specific predictors when evidence contains information about the underlying task.</p>
+<h2 id="instantiation">Instantiation</h2>
+<figure class="tex-figure">
+<div class="tikz-stage">
+<script type="text/tikz">
+\usetikzlibrary{arrows.meta,positioning,fit,calc,backgrounds}
+\begin{tikzpicture}[
+    node distance=0.75cm and 1.2cm,
+    box/.style={
+        draw,
+        rounded corners,
+        align=center,
+        inner sep=6pt,
+        minimum width=3.0cm,
+        minimum height=0.8cm
+    },
+    widebox/.style={
+        draw,
+        rounded corners,
+        align=center,
+        inner sep=6pt,
+        minimum width=4.0cm,
+        minimum height=0.8cm
+    },
+    title/.style={font=\bfseries, align=center},
+    arrow/.style={-{Latex[length=2mm]}, thick}
+]
+
+% ================= Shared top-down abstraction =================
+\node[title] (main-title) {Unified higher-order functional modeling};
+
+\node[widebox, below=0.55cm of main-title] (evidence)
+{$D$\\ evidence};
+
+\node[widebox, below=of evidence] (operator)
+{$\mathcal F_\theta, \mathcal U_\theta, \mathcal S_\theta$\\ high-order operator};
+
+\node[widebox, below=of operator] (object)
+{$f_D\in\mathcal H$\\ first-order object};
+
+\draw[arrow] (evidence) -- (operator);
+\draw[arrow] (operator) -- (object);
+
+% ================= Three horizontal instances =================
+
+\node[title, below left=1.0cm and 4.1cm of object] (wm-title)
+{I. World model};
+
+\node[title, below=1.0cm of object] (upd-title)
+{II. Self-evolving};
+
+\node[title, below right=1.0cm and 4.1cm of object] (self-title)
+{III. Self-modeling};
+
+\draw[arrow] (object) -- (wm-title);
+\draw[arrow] (object) -- (upd-title);
+\draw[arrow] (object) -- (self-title);
+
+% ---------------- Branch I: World model ----------------
+\node[box, below=0.45cm of wm-title] (wm-evidence)
+{$D_{\mathrm{env}}$\\ $\Bigl\{(s_t\text{,}\,a_t\text{,}\,s_{t+1})\Bigr\}$};
+
+\node[box, below=of wm-evidence] (wm-model)
+{$M_D=\mathcal F_\theta^{\mathrm{wm}}(D_{\mathrm{env}})$};
+
+\node[box, below=of wm-model] (wm-output)
+{$\hat s_{t+1}=M_D(s_t\text{,}\,a_t)$};
+
+\node[box, below=of wm-output] (wm-policy)
+{$\max_\phi J(\pi_\phi\text{;}\,M_D)$};
+
+\node[box, below=of wm-policy] (wm-collect)
+{$\mathcal{L}_{D_{\mathrm{env}}}(\pi_{\phi^*})$};
+
+\draw[arrow] (wm-title) -- (wm-evidence);
+\draw[arrow] (wm-evidence) -- (wm-model);
+\draw[arrow] (wm-model) -- (wm-output);
+\draw[arrow] (wm-output) -- (wm-policy);
+\draw[arrow] (wm-policy) -- (wm-collect);
+
+\draw[arrow] (wm-collect.west) .. controls +(-1.7,0) and +(-1.7,0) ..
+    node[left] {\small $\nabla_\theta\mathcal L_{D_{\mathrm{env}}}$} (wm-model.west);
+
+% ---------------- Branch II: Self-evolving ----------------
+\node[box, below=0.45cm of upd-title] (upd-input)
+{$D^{\mathrm{tr}}\text{,}\,f_0$};
+
+\node[box, below=of upd-input] (upd-op)
+{$\delta f=\mathcal U_\theta(D^{\mathrm{tr}}\text{,}\,f_0)$};
+
+\node[box, below=of upd-op] (upd-output)
+{$f_1=f_0+\delta f$};
+
+\node[box, below=of upd-output] (upd-loss)
+{$\mathcal L_{D^{\mathrm{val}}}(f_1)$};
+
+\draw[arrow] (upd-title) -- (upd-input);
+\draw[arrow] (upd-input) -- (upd-op);
+\draw[arrow] (upd-op) -- (upd-output);
+\draw[arrow] (upd-output) -- (upd-loss);
+
+\draw[arrow] (upd-loss.east) .. controls +(0.9,0) and +(0.9,0) ..
+    node[right] {$\nabla_\theta\mathcal L_{D^{\mathrm{val}}}$} (upd-op.east);
+
+% ---------------- Branch III: Self-modeling ----------------
+\node[box, below=0.45cm of self-title] (self-context)
+{$c$\\ internal context};
+
+\node[box, below=of self-context] (self-model)
+{$\hat f_c=\mathcal S_\theta(c)$};
+
+\node[box, below=of self-model] (self-predict)
+{$\hat f_c(x)\approx f(x)$};
+
+\node[box, below=of self-predict] (self-correct)
+{$f_1=(f+\delta f)(x)$};
+
+\node[box, below=of self-correct] (self-loss)
+{$\mathcal L_D(f_1)$};
+
+\draw[arrow] (self-title) -- (self-context);
+\draw[arrow] (self-context) -- (self-model);
+\draw[arrow] (self-model) -- (self-predict);
+\draw[arrow] (self-predict) -- (self-correct);
+\draw[arrow] (self-correct) -- (self-loss);
+
+\draw[arrow] (self-loss.east) .. controls +(1.1,0) and +(1.1,0) ..
+    node[right] {$\nabla_\theta\mathcal L_D$} (self-model.east);
+
+\end{tikzpicture}
+</script>
+</div>
+<figcaption>Shared abstraction and three instances of higher-order functional modeling. The top part shows the common form: evidence $D$ is mapped by a higher-order operator $\mathcal F_\theta$ to a first-order object $f_D$. The bottom part instantiates this object as a world model $M_D$, a functional update $\delta f$, or a self-model $\hat f_c$. In the world-model branch, the inferred model $M_D$ is further reused as a simulator for policy optimization via rollouts (second-order usage); the optimized policy $\pi_{\phi^*}$ then collects fresh evidence in the real environment to update the operator parameters $\theta$, closing a self-improving outer loop.</figcaption>
+</figure>
+<h3>Example I: world-model operator.</h3>
+<p>Let $\mathcal S$ be the state space and $\mathcal A$ the action or control space. A first-order world model is a dynamics model</p>
+<div class="math-block">\begin{equation}
+    M:\mathcal S\times\mathcal A\rightarrow\mathcal S,
+\end{equation}</div>
+<p>which predicts the next state</p>
+<div class="math-block">\begin{equation}
+    \hat s_{t+1}=M(s_t,a_t).
+\end{equation}</div>
+<p>This is a first-order transition predictor.</p>
+<p>A higher-order world-modeling system instead learns an operator</p>
+<div class="math-block">\begin{equation}
+    \mathcal F_\theta^{\mathrm{wm}}:
+    \mathcal D_{\mathrm{env}}
+    \rightarrow
+    \mathcal M,
+\end{equation}</div>
+<p>where</p>
+<div class="math-block">\begin{equation}
+    \mathcal M
+    \subseteq
+    \{M:\mathcal S\times\mathcal A\rightarrow\mathcal S\}
+\end{equation}</div>
+<p>is a class of dynamics models, and</p>
+<div class="math-block">\begin{equation}
+    D_{\mathrm{env}}
+    =
+    \{(s_t,a_t,s_{t+1})\}_{t=1}^m
+\end{equation}</div>
+<p>is evidence about the current environment.</p>
+<p>The adapted world model is</p>
+<div class="math-block">\begin{equation}
+    M_D
+    =
+    \mathcal F_\theta^{\mathrm{wm}}(D_{\mathrm{env}}),
+\end{equation}</div>
+<p>and prediction is</p>
+<div class="math-block">\begin{equation}
+    \hat s_{t+1}
+    =
+    M_D(s_t,a_t)
+    =
+    [\mathcal F_\theta^{\mathrm{wm}}(D_{\mathrm{env}})](s_t,a_t).
+\end{equation}</div>
+<p>The learning objective can be written as</p>
+<div class="math-block">\begin{equation}
+    \min_\theta
+    \;
+    \mathbb E_{\tau}
+    \mathbb E_{D_{\mathrm{env}}\sim P_\tau^m}
+    \mathbb E_{(s,a,s&#x27;)\sim P_\tau}
+    \left[
+        d_{\mathcal S}
+        \left(
+            [\mathcal F_\theta^{\mathrm{wm}}(D_{\mathrm{env}})](s,a),
+            s&#x27;
+        \right)
+    \right],
+\end{equation}</div>
+<p>where $d_{\mathcal S}$ is a state prediction loss. Thus, the higher-order world model learns how to infer the environment dynamics from experience, rather than learning only a single universal transition function.</p>
+<p>Once the adapted world model $M_D$ is obtained, it serves as a first-order object that can be reused by a second-order procedure: policy optimization through rollouts inside the model. Let</p>
+<div class="math-block">\begin{equation}
+    \pi_\phi:
+    \mathcal S
+    \rightarrow
+    \Delta(\mathcal A)
+\end{equation}</div>
+<p>be a policy with parameters $\phi$, so that actions are sampled as</p>
+<div class="math-block">\begin{equation}
+    a_t\sim\pi_\phi(\cdot\mid s_t).
+\end{equation}</div>
+<p>Starting from an initial state $s_0\sim\rho_0$, we generate an imagined trajectory entirely inside the learned world model by alternating</p>
+<div class="math-block">\begin{equation}
+    a_t\sim\pi_\phi(\cdot\mid s_t),
+    \qquad
+    s_{t+1}=M_D(s_t,a_t),
+\end{equation}</div>
+<p>without querying the real environment. The RL objective simply maximizes the expected return of the policy under these model rollouts:</p>
+<div class="math-block">\begin{equation}
+    \max_\phi
+    \;
+    J(\pi_\phi;M_D),
+\end{equation}</div>
+<p>where $J(\pi_\phi;M_D)$ denotes the expected return of $\pi_\phi$ evaluated inside the world model $M_D$. Here the world-model operator $\mathcal F_\theta^{\mathrm{wm}}$ is held fixed, and only the policy parameters $\phi$ are updated. This exhibits the second-order usage of the world model: the first-order system $M_D$ produced by the higher-order operator is turned into a differentiable or sampled simulator, so that learning a good policy no longer requires expensive interaction with the real environment but only rollouts within the inferred dynamics.</p>
+<p>Finally, the optimized policy $\pi_{\phi^*}$ can be deployed back into the real environment to keep collecting fresh evidence. These new real-world transitions $(s_t,a_t,s_{t+1})$ are appended to $D_{\mathrm{env}}$ and used to update the world-model operator parameters $\theta$, closing an outer loop:</p>
+<div class="math-block">\begin{equation}
+    \pi_{\phi^*}
+    \xrightarrow{\text{act in real env}}
+    D_{\mathrm{env}}
+    \xrightarrow{\text{update }\theta}
+    \mathcal F_\theta^{\mathrm{wm}}
+    \xrightarrow{}
+    M_D
+    \xrightarrow{\text{rollouts}}
+    \pi_{\phi^*}.
+\end{equation}</div>
+<p>In this cycle, a better policy gathers more informative data, the additional evidence yields a more accurate inferred world model, and the improved model in turn enables a better policy. Data collection, world-model inference, and policy optimization are thereby coupled into a single self-improving loop.</p>
+<h3>Example II: self-evolving agent.</h3>
+<p>Let</p>
+<div class="math-block">\begin{equation}
+    f_0:\mathcal X\rightarrow\mathcal Y
+\end{equation}</div>
+<p>be a base first-order agent. A self-evolving higher-order system learns an update operator</p>
+<div class="math-block">\begin{equation}
+    \mathcal U_\theta:
+    \mathcal D\times\mathcal H
+    \rightarrow
+    T\mathcal H,
+\end{equation}</div>
+<p>where $T\mathcal H$ denotes a tangent or update space over the function class $\mathcal H$.</p>
+<p>Given evidence $D$ and the current system $f_0$, the update operator outputs a functional correction</p>
+<div class="math-block">\begin{equation}
+    \delta f
+    =
+    \mathcal U_\theta(D,f_0).
+\end{equation}</div>
+<p>The improved agent is</p>
+<div class="math-block">\begin{equation}
+    f_1 = f_0 + \delta f.
+\end{equation}</div>
+<p>Therefore, its prediction is</p>
+<div class="math-block">\begin{equation}
+    \hat y
+    =
+    f_1(x)
+    =
+    \left(f_0+\mathcal U_\theta(D,f_0)\right)(x).
+\end{equation}</div>
+<p>The corresponding objective is</p>
+<div class="math-block">\begin{equation}
+    \min_\theta
+    \;
+    \mathbb E_{\tau,D_\tau,(x&#x27;,y&#x27;)}
+    \left[
+        \ell
+        \left(
+            \left(f_0+\mathcal U_\theta(D_\tau,f_0)\right)(x&#x27;),
+            y&#x27;
+        \right)
+    \right].
+\end{equation}</div>
+<p>This formalizes self-improvement as learning an operator that maps evidence and a current first-order function to a functional update.</p>
+<h3>Gradient-based special case.</h3>
+<p>A standard gradient-based update can be written as</p>
+<div class="math-block">\begin{equation}
+    f_1
+    =
+    f_0
+    -
+    \alpha \nabla_f
+    \mathcal L_D(f_0),
+\end{equation}</div>
+<p>where</p>
+<div class="math-block">\begin{equation}
+    \mathcal L_D(f)
+    =
+    \sum_{(x_i,y_i)\in D}
+    \ell(f(x_i),y_i).
+\end{equation}</div>
+<p>This is a special case of the update-operator formulation with</p>
+<div class="math-block">\begin{equation}
+    \mathcal U(D,f_0)
+    =
+    -
+    \alpha \nabla_f
+    \mathcal L_D(f_0).
+\end{equation}</div>
+<p>A learned self-evolving system generalizes this by learning</p>
+<div class="math-block">\begin{equation}
+    \mathcal U_\theta(D,f_0)
+\end{equation}</div>
+<p>instead of using a fixed hand-designed update rule.</p>
+<p>This actually leads to high-order meta-gradient as explained in the <a href="#appendix">Appendix</a>.</p>
+<h3>Example III: self-modeling and reflective correction.</h3>
+<p>Let an agent's first-order behavior be represented by</p>
+<div class="math-block">\begin{equation}
+    f:\mathcal X\rightarrow\mathcal Y.
+\end{equation}</div>
+<p>Let $c\in\mathcal C$ denote internal context, such as hidden states, reasoning traces, memory states, uncertainty estimates, or previous outputs. A self-modeling system learns an operator</p>
+<div class="math-block">\begin{equation}
+    \mathcal S_\theta:
+    \mathcal C
+    \rightarrow
+    \widehat{\mathcal H},
+\end{equation}</div>
+<p>where $\widehat{\mathcal H}$ is a class of models over the agent's own behavior.</p>
+<p>The self-model is</p>
+<div class="math-block">\begin{equation}
+    \hat f_c
+    =
+    \mathcal S_\theta(c),
+\end{equation}</div>
+<p>and it predicts the agent's own first-order behavior:</p>
+<div class="math-block">\begin{equation}
+    \hat y
+    =
+    \hat f_c(x)
+    \approx
+    f(x).
+\end{equation}</div>
+<p>A calibrated self-model satisfies</p>
+<div class="math-block">\begin{equation}
+    d(\hat f_c,f)\leq \varepsilon
+\end{equation}</div>
+<p>under a suitable functional distance $d$. For example, one may define</p>
+<div class="math-block">\begin{equation}
+    d(\hat f_c,f)
+    =
+    \mathbb E_{x\sim P}
+    \left[
+        \ell(\hat f_c(x),f(x))
+    \right].
+\end{equation}</div>
+<p>Such a self-model enables reflective correction. Suppose the self-model predicts that the first-order system will make an error on input $x$. Let the predicted error be</p>
+<div class="math-block">\begin{equation}
+    e_c(x)
+    =
+    \hat f_c(x)-y^\star,
+\end{equation}</div>
+<p>where $y^\star$ is the desired answer, target, or externally verified signal. A correction operator</p>
+<div class="math-block">\begin{equation}
+    \mathcal C_\phi:
+    \mathcal C\times\widehat{\mathcal H}\times\mathcal D
+    \rightarrow
+    T\mathcal H
+\end{equation}</div>
+<p>then produces</p>
+<div class="math-block">\begin{equation}
+    \delta f
+    =
+    \mathcal C_\phi(c,\hat f_c,D).
+\end{equation}</div>
+<p>The final answer is generated by the corrected first-order system:</p>
+<div class="math-block">\begin{equation}
+    \hat y
+    =
+    (f+\delta f)(x).
+\end{equation}</div>
+<p>Thus, self-awareness can be formalized not as an informal psychological property, but as calibrated self-modeling: the agent maintains an internal model of its own first-order behavior and uses that model to improve or correct its outputs.</p>
+<h2 id="summary">Summary</h2>
+<h3>Compositional view.</h3>
+<p>The above examples share the same abstract structure:</p>
+<div class="math-block">\begin{equation}
+    \text{evidence}
+    \quad
+    D
+    \xrightarrow{\mathcal F_\theta}
+    \quad
+    \text{first-order function}
+    \quad
+    f_D
+    \xrightarrow{\mathrm{eval\ at\ }x}
+    \quad
+    \text{answer}
+    \quad
+    y.
+\end{equation}</div>
+<p>Equivalently,</p>
+<div class="math-block">\begin{equation}
+    y
+    =
+    \operatorname{Eval}(\mathcal F_\theta(D),x),
+\end{equation}</div>
+<p>where</p>
+<div class="math-block">\begin{equation}
+    \operatorname{Eval}:\mathcal H\times\mathcal X\rightarrow\mathcal Y,
+    \qquad
+    \operatorname{Eval}(f,x)=f(x).
+\end{equation}</div>
+<p>Therefore, the complete higher-order predictor is the composition</p>
+<div class="math-block">\begin{equation}
+    G_\theta(D,x)
+    =
+    \operatorname{Eval}(\mathcal F_\theta(D),x)
+    =
+    [\mathcal F_\theta(D)](x).
+\end{equation}</div>
+<h3>Summary.</h3>
+<p>The distinction between first-order and higher-order systems can be expressed as</p>
+<div class="math-block">\begin{align}
+    \text{First-order system:}
+    \qquad
+    &amp; f:\mathcal X\rightarrow\mathcal Y,
+    \\
+    \text{Higher-order system:}
+    \qquad
+    &amp; \mathcal F:\mathcal D\rightarrow\mathcal H,
+    \qquad
+    [\mathcal F(D)](x)\rightarrow y.
+\end{align}</div>
+<p>The first-order system learns a direct answer map. The higher-order system learns a rule for constructing answer maps. Hence, higher-order intelligence can be formulated as operator learning over first-order predictors:</p>
+<div class="math-block">\begin{equation}
+    \boxed{
+    \mathcal F_\theta:D\mapsto f_D,
+    \qquad
+    f_D:x\mapsto y.
+    }
+\end{equation}</div>
+<h2 id="appendix">Appendix</h2>
+<h3>Why the update operator is higher-order.</h3>
+<p>To make the update-operator view explicit, parameterize the first-order system by weights $w\in\mathbb R^p$:</p>
+<div class="math-block">\begin{equation}
+    f_w:\mathcal X\rightarrow\mathcal Y .
+\end{equation}</div>
+<p>Given task evidence</p>
+<div class="math-block">\begin{equation}
+    D
+    =
+    \{(x_i,y_i)\}_{i=1}^m ,
+\end{equation}</div>
+<p>define the task loss</p>
+<div class="math-block">\begin{equation}
+    \mathcal L_D(w)
+    =
+    \sum_{(x_i,y_i)\in D}
+    \ell(f_w(x_i),y_i).
+\end{equation}</div>
+<p>The usual gradient-descent update is</p>
+<div class="math-block">\begin{equation}
+    w_1
+    =
+    w_0
+    -
+    \alpha \nabla_w \mathcal L_D(w_0).
+\end{equation}</div>
+<p>Equivalently, in function space, this update induces a new first-order function</p>
+<div class="math-block">\begin{equation}
+    f_{w_1}
+    =
+    f_{w_0}
+    +
+    \delta f_D,
+\end{equation}</div>
+<p>where</p>
+<div class="math-block">\begin{equation}
+    \delta f_D
+    :=
+    f_{w_0-\alpha\nabla_w\mathcal L_D(w_0)}
+    -
+    f_{w_0}.
+\end{equation}</div>
+<p>Therefore, gradient descent itself can be interpreted as an operator that maps a dataset and a current first-order function to a new first-order function:</p>
+<div class="math-block">\begin{equation}
+    \mathcal U_{\mathrm{GD}}:
+    \mathcal D\times\mathcal H
+    \rightarrow
+    T\mathcal H,
+\end{equation}</div>
+<p>with</p>
+<div class="math-block">\begin{equation}
+    \mathcal U_{\mathrm{GD}}(D,f_{w_0})
+    =
+    f_{w_0-\alpha\nabla_w\mathcal L_D(w_0)}
+    -
+    f_{w_0}.
+\end{equation}</div>
+<p>The adapted system is then</p>
+<div class="math-block">\begin{equation}
+    f_{w_1}
+    =
+    f_{w_0}
+    +
+    \mathcal U_{\mathrm{GD}}(D,f_{w_0}).
+\end{equation}</div>
+<p>This is higher-order because $\mathcal U_{\mathrm{GD}}$ does not output an ordinary answer $y\in\mathcal Y$. Instead, it outputs a change to a function. That is, the object being transformed is itself a first-order predictor. The update acts at the level of functions:</p>
+<div class="math-block">\begin{equation}
+    \text{data and current function}
+    \quad
+    (D,f)
+    \quad
+    \longmapsto
+    \quad
+    \text{functional update}
+    \quad
+    \delta f .
+\end{equation}</div>
+<h3>Learned update operator.</h3>
+<p>A self-evolving agent replaces the hand-designed gradient-descent update by a learned update operator</p>
+<div class="math-block">\begin{equation}
+    \mathcal U_\theta:
+    \mathcal D\times\mathcal H
+    \rightarrow
+    T\mathcal H,
+\end{equation}</div>
+<p>where $\theta$ parameterizes the update rule itself. The adapted first-order system is</p>
+<div class="math-block">\begin{equation}
+    f_1
+    =
+    f_0+\mathcal U_\theta(D,f_0).
+\end{equation}</div>
+<p>For a query $x'$, the answer after self-update is</p>
+<div class="math-block">\begin{equation}
+    \hat y&#x27;
+    =
+    \left(f_0+\mathcal U_\theta(D,f_0)\right)(x&#x27;).
+\end{equation}</div>
+<p>Thus, the prediction pipeline is</p>
+<div class="math-block">\begin{equation}
+    (D,f_0)
+    \xrightarrow{\mathcal U_\theta}
+    \delta f
+    \xrightarrow{+f_0}
+    f_1
+    \xrightarrow{\mathrm{eval\ at\ }x&#x27;}
+    \hat y&#x27; .
+\end{equation}</div>
+<p>The learned object $\mathcal U_\theta$ is therefore not merely a predictor. It is a predictor-transformer. It learns how to modify a first-order predictor so that the modified predictor performs better.</p>
+<h3>Meta-learning objective.</h3>
+<p>To train the update operator, assume tasks are sampled as</p>
+<div class="math-block">\begin{equation}
+    \tau\sim\rho.
+\end{equation}</div>
+<p>For each task $\tau$, split the data into an adaptation set $D_\tau^{\mathrm{tr}}$ and an evaluation set $D_\tau^{\mathrm{val}}$. The update operator first produces an adapted model</p>
+<div class="math-block">\begin{equation}
+    f_\tau^{\mathrm{adapt}}
+    =
+    f_0
+    +
+    \mathcal U_\theta(D_\tau^{\mathrm{tr}},f_0).
+\end{equation}</div>
+<p>The meta-objective evaluates the adapted model on held-out data from the same task:</p>
+<div class="math-block">\begin{equation}
+    \min_\theta
+    \;
+    \mathcal J(\theta)
+    :=
+    \mathbb E_{\tau\sim\rho}
+    \left[
+        \mathcal L_{D_\tau^{\mathrm{val}}}
+        \left(
+            f_0+\mathcal U_\theta(D_\tau^{\mathrm{tr}},f_0)
+        \right)
+    \right].
+    
+\end{equation}</div>
+<p>This is a meta-learning objective because $\theta$ is optimized not to solve the training examples directly, but to produce an update rule that yields a better adapted function on future examples.</p>
+<h3>Meta-gradient.</h3>
+<p>The gradient with respect to $\theta$ is a meta-gradient:</p>
+<div class="math-block">\begin{equation}
+    \nabla_\theta \mathcal J(\theta)
+    =
+    \mathbb E_{\tau\sim\rho}
+    \left[
+        \nabla_\theta
+        \mathcal L_{D_\tau^{\mathrm{val}}}
+        \left(
+            f_0+\mathcal U_\theta(D_\tau^{\mathrm{tr}},f_0)
+        \right)
+    \right].
+\end{equation}</div>
+<p>By the chain rule,</p>
+<div class="math-block">\begin{equation}
+    \nabla_\theta \mathcal J(\theta)
+    =
+    \mathbb E_{\tau\sim\rho}
+    \left[
+        \left(
+            \nabla_{f}
+            \mathcal L_{D_\tau^{\mathrm{val}}}(f)
+            \bigg|_{f=f_\tau^{\mathrm{adapt}}}
+        \right)
+        \cdot
+        \nabla_\theta
+        \mathcal U_\theta(D_\tau^{\mathrm{tr}},f_0)
+    \right].
+\end{equation}</div>
+<p>This gradient updates the parameters of the updater, not merely the parameters of the first-order model. Hence, optimization of $\theta$ is learning how to update.</p>
+<p>In parameter space, suppose the update operator outputs a weight update</p>
+<div class="math-block">\begin{equation}
+    \Delta w_\theta
+    =
+    U_\theta(D_\tau^{\mathrm{tr}},w_0),
+\end{equation}</div>
+<p>so that</p>
+<div class="math-block">\begin{equation}
+    w_\tau&#x27;
+    =
+    w_0+\Delta w_\theta.
+\end{equation}</div>
+<p>Then the meta-objective is</p>
+<div class="math-block">\begin{equation}
+    \mathcal J(\theta)
+    =
+    \mathbb E_{\tau\sim\rho}
+    \left[
+        \mathcal L_{D_\tau^{\mathrm{val}}}(w_\tau&#x27;)
+    \right]
+    =
+    \mathbb E_{\tau\sim\rho}
+    \left[
+        \mathcal L_{D_\tau^{\mathrm{val}}}
+        \left(
+            w_0+U_\theta(D_\tau^{\mathrm{tr}},w_0)
+        \right)
+    \right].
+\end{equation}</div>
+<p>The corresponding meta-gradient is</p>
+<div class="math-block">\begin{equation}
+    \nabla_\theta \mathcal J(\theta)
+    =
+    \mathbb E_{\tau\sim\rho}
+    \left[
+        \nabla_{w&#x27;}
+        \mathcal L_{D_\tau^{\mathrm{val}}}(w&#x27;)
+        \bigg|_{w&#x27;=w_\tau&#x27;}
+        \;
+        \nabla_\theta
+        U_\theta(D_\tau^{\mathrm{tr}},w_0)
+    \right].
+\end{equation}</div>
+<p>Therefore, $\theta$ receives credit according to whether its proposed update $U_\theta(D_\tau^{\mathrm{tr}},w_0)$ improves validation performance after adaptation. This is precisely the meta-learning signal.</p>
+<h3>Gradient descent as a special case.</h3>
+<p>Ordinary gradient descent is recovered when the update operator is fixed as</p>
+<div class="math-block">\begin{equation}
+    U_{\mathrm{GD}}(D,w_0)
+    =
+    -\alpha\nabla_w\mathcal L_D(w_0).
+\end{equation}</div>
+<p>A learned update operator generalizes this by replacing the fixed rule with</p>
+<div class="math-block">\begin{equation}
+    U_\theta(D,w_0).
+\end{equation}</div>
+<p>For example, it may learn task-dependent step sizes, coordinate-wise preconditioning, curvature corrections, memory-dependent updates, or entirely non-gradient update directions:</p>
+<div class="math-block">\begin{equation}
+    w_1
+    =
+    w_0
+    +
+    U_\theta
+    \left(
+        D,
+        w_0,
+        \nabla_w\mathcal L_D(w_0),
+        h_0
+    \right),
+\end{equation}</div>
+<p>where $h_0$ denotes an optional optimizer state or memory.</p>
+<p>Thus, standard learning optimizes the first-order parameters $w$:</p>
+<div class="math-block">\begin{equation}
+    w
+    \leftarrow
+    w-\alpha\nabla_w\mathcal L_D(w),
+\end{equation}</div>
+<p>whereas meta-learning optimizes the higher-order parameters $\theta$ of the update rule:</p>
+<div class="math-block">\begin{equation}
+    \theta
+    \leftarrow
+    \theta-\beta\nabla_\theta\mathcal J(\theta).
+\end{equation}</div>
+<p>The former learns a predictor; the latter learns how to produce a better predictor.</p>
+<h2 id="citation">Citation</h2>
+<p>If you find this article useful, please cite it as:</p>
+<p class="citation-text">Zihan Ding. &ldquo;Next Step for AGI: High-Order System.&rdquo; <em>quantumiracle.github.io</em>, June 2026. <a href="https://quantumiracle.github.io/webpage/blogs/blog20260705.html">https://quantumiracle.github.io/webpage/blogs/blog20260705.html</a></p>
+<p>BibTeX:</p>
+<pre><code>@misc{ding2026highorder,
+  author       = {Ding, Zihan},
+  title        = {Next Step for {AGI}: High-Order System},
+  year         = {2026},
+  month        = {June},
+  howpublished = {\url{https://quantumiracle.github.io/webpage/blogs/blog20260705.html}},
+  note         = {Blog post}
+}</code></pre>
+        </article>
+    </main>
+</body>
+</html>
